@@ -100,10 +100,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInventory: {fileID: 0}
-  woodProjectilePrefab: {fileID: 0}
-  rockProjectilePrefab: {fileID: 0}
+  woodProjectilePrefab: {fileID: 4033723568487044147, guid: 445b6f7d6c0372842a2f8c6dee805dce, type: 3}
+  rockProjectilePrefab: {fileID: 8165887845862638446, guid: e956660a62b4b5546b0e9fd142f56555, type: 3}
   bottleProjectilePrefab: {fileID: 1373754627322965108}
-  mixedProjectilePrefab: {fileID: 0}
+  mixedProjectilePrefab: {fileID: 2637525531518838217, guid: be825151a412ded4694771efdf906ea9, type: 3}
 --- !u!50 &6222097009099929371
 Rigidbody2D:
   serializedVersion: 4

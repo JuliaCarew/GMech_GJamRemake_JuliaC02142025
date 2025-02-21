@@ -11,6 +11,16 @@ public class Projectiles : MonoBehaviour
     [SerializeField] private GameObject bottleProjectilePrefab;
     [SerializeField] private GameObject mixedProjectilePrefab;
 
+    [SerializeField] private int damage = 1;
+
+    private void Start()
+    {
+        if (playerInventory == null)
+        {
+            playerInventory = FindObjectOfType<PlayerInventory>();
+        }
+    }
+
     public void CreateProjectile()
     {
         Debug.Log("Creating projectile...");
@@ -50,7 +60,21 @@ public class Projectiles : MonoBehaviour
                 return bottleProjectilePrefab;
             default:
                 Debug.Log("Created Mixed projectile");
-                return mixedProjectilePrefab; // Mixed items create a special projectile
+                return mixedProjectilePrefab;  
+        }
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            HealthSystem enemyHealth = other.GetComponent<HealthSystem>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(3);
+            }
+
+            Destroy(gameObject); // Destroy the projectile on impact
         }
     }
 }

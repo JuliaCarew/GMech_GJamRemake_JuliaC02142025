@@ -9,11 +9,12 @@ public class PlayerController : MonoBehaviour
     public Vector2 Position {get; private set;}
     public Vector2 LookAtDirection {get; private set;}
 
-    [SerializeField]private int speed = 5; 
+    [SerializeField]private float speed = 5; 
 
     void Update()
     {
         ReadInput();
+        transform.position = Position;
     }
 
     private void ReadInput()
@@ -38,5 +39,13 @@ public class PlayerController : MonoBehaviour
             LookAtDirection = moveDirection;
         }
         Position += moveDirection.normalized * speed * Time.deltaTime;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy") || other.CompareTag("EnemyProjectile"))
+        {
+            GetComponent<HealthSystem>().TakeDamage(1);
+        }
     }
 }

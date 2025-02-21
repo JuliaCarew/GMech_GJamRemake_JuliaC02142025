@@ -73,6 +73,7 @@ public class ItemSpawner : MonoBehaviour
             if (prefabToSpawn != null)
             {
                 Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
+                Debug.Log("Spawned item: " + prefabToSpawn.name);
             }
     }
 }

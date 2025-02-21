@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    [SerializeField] private int inventorySize = 3;
-    [SerializeField] private float itemMagnetDistance = 2f;
+    [SerializeField] private UIManager uiManager;
 
+    [SerializeField] private int inventorySize = 3;
     private List<string> inventory = new List<string>();
     
     public void AddItem(GameObject item)
@@ -17,6 +17,16 @@ public class PlayerInventory : MonoBehaviour
         inventory.Add(itemName);
         Debug.Log("Item added to inventory: " + itemName);
         Destroy(item);
+
+        uiManager.UpdateInventoryUI(inventory); // Update UI
+
+        //check items in inventory
+        //create projectile
+        if (inventory.Count == inventorySize)
+        {
+            Debug.Log("Inventory full! Ready to create projectile.");
+            FindObjectOfType<Projectiles>().CreateProjectile();
+        }
     }
 
     public string GetProjectileType()
