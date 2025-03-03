@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         StartCoroutine(SpawnWave());
+        // add the fact that the next wave will not spawn until current wave is defeated.
     }
 
     private IEnumerator SpawnWave()

@@ -49,3 +49,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
+// add effect when walking dust clouds
+// add space to roll
+// add sprite swap when walking left or right (to face that direction)
