@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1132002252331008835}
   m_Layer: 0
   m_Name: RockProjectile
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,9 +75,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
+  m_SortingOrder: 3
+  m_Sprite: {fileID: 21300000, guid: 9aa48ad575ace0a4a923d49129d44ab6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -104,6 +104,8 @@ MonoBehaviour:
   rockProjectilePrefab: {fileID: 8165887845862638446}
   bottleProjectilePrefab: {fileID: 1373754627322965108, guid: 4e338293f4b3de149a95b9ba61e46e15, type: 3}
   mixedProjectilePrefab: {fileID: 2637525531518838217, guid: be825151a412ded4694771efdf906ea9, type: 3}
+  damage: 1
+  playerTransform: {fileID: 0}
 --- !u!50 &5350136478501275280
 Rigidbody2D:
   serializedVersion: 4
@@ -163,16 +165,16 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.000120881945, y: -0.0051980317}
   m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
+    oldSize: {x: 0.18, y: 0.18}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.0001, y: 0.0001}
+  m_Size: {x: 0.15962464, y: 0.17039606}
   m_EdgeRadius: 0

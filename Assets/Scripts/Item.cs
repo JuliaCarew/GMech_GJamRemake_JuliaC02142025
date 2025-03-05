@@ -18,11 +18,12 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log($"Collided with: {other.gameObject.name}");
+        //Debug.Log($"Collided with: {other.gameObject.name}");
         if (other.CompareTag("Player") ) //&& playerInventory != null
         {
-            Debug.Log("Player picked up item!");
+            //Debug.Log("Player picked up item!");
             PlayerInventory playerInventory = other.GetComponent<PlayerInventory>();
+            AudioManager.Instance.PlayPickupSound();
             
             if (playerInventory != null)
             {

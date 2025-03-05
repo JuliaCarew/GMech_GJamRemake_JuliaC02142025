@@ -20,6 +20,8 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        Debug.Log($"{gameObject.name} took {damage} damage.");
+        
         if (currentHealth > 0)
         {
             currentHealth -= damage;

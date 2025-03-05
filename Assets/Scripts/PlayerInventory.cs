@@ -15,7 +15,7 @@ public class PlayerInventory : MonoBehaviour
 
         string itemName = item.name.Replace("(Clone)", "").Trim();
         inventory.Add(itemName);
-        Debug.Log("Item added to inventory: " + itemName);
+        //Debug.Log("Item added to inventory: " + itemName);
         Destroy(item);
 
         uiManager.UpdateInventoryUI(inventory); // Update UI
@@ -24,7 +24,7 @@ public class PlayerInventory : MonoBehaviour
         //create projectile
         if (inventory.Count == inventorySize)
         {
-            Debug.Log("Inventory full! Ready to create projectile.");
+            //Debug.Log("Inventory full! Ready to create projectile.");
             FindObjectOfType<Projectiles>().CreateProjectile();
         }
     }
@@ -43,7 +43,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void RemoveUsedItems()
     {
-        Debug.Log("Inventory cleared!");
+        //Debug.Log("Inventory cleared!");
         inventory.Clear(); // Clear inventory when a projectile is created
     }   
 }

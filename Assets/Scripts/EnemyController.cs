@@ -10,27 +10,30 @@ public class EnemyController : MonoBehaviour
 
     private int waveNumber = 1;
     private List<GameObject> activeEnemies = new List<GameObject>();
+    private bool isSpawningWave = false;
 
     private void Start()
     {
         StartCoroutine(SpawnWave());
-        // add the fact that the next wave will not spawn until current wave is defeated.
     }
 
     private IEnumerator SpawnWave()
     {
         while (true)
         {
-            yield return new WaitForSeconds(timeBetweenWaves);
+            // Wait until all enemies are defeated before spawning the next wave
+            yield return new WaitUntil(() => activeEnemies.Count == 0);
 
             Debug.Log($"Spawning Wave {waveNumber} with {waveNumber} enemies!");
+            isSpawningWave = true;
 
             for (int i = 0; i < waveNumber; i++)
             {
                 SpawnEnemy();
             }
 
-            waveNumber++; // Increase wave number
+            waveNumber++;  
+            isSpawningWave = false;
         }
     }
 
@@ -38,12 +41,19 @@ public class EnemyController : MonoBehaviour
     {
         if (spawnPoints.Length == 0)
         {
-            Debug.LogError("No spawn points assigned in EnemyController!");
+            //Debug.LogError("No spawn points assigned in EnemyController!");
             return;
         }
 
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
         GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
         activeEnemies.Add(enemy);
+
+        enemy.GetComponent<HealthSystem>().OnDeath += () => RemoveEnemyFromList(enemy);
+    }
+
+    private void RemoveEnemyFromList(GameObject enemy)
+    {
+        activeEnemies.Remove(enemy);
     }
 }

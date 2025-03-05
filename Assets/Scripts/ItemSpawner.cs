@@ -12,7 +12,7 @@ public class ItemSpawner : MonoBehaviour
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private TileBase floorTile;
     [SerializeField] private Vector2Int mapSize = new Vector2Int(20,10); // map is 20x10 for now
-    [SerializeField] private float spawnInterval = 3f;
+    [SerializeField] private float spawnInterval = 1.3f;
 
 
     void Start()
@@ -22,7 +22,8 @@ public class ItemSpawner : MonoBehaviour
 
     private IEnumerator SpawnItemCoroutine()
     {
-        while(true){
+        while (true)
+        {
             Vector2 spawnPosition;
             if (GetRandomPosition(out spawnPosition))
             {
@@ -39,14 +40,15 @@ public class ItemSpawner : MonoBehaviour
     /// <returns></returns>
     private bool GetRandomPosition(out Vector2 spawnPosition)
     {
-        for(int i = 0; i < 10; i++){
-            Vector3Int tilePosition = new Vector3Int(
-                Random.Range(0, mapSize.x),
-                Random.Range(0, mapSize.y),
-                0
-            );
+        for (int i = 0; i < 10; i++) 
+        {
+            int x = Random.Range(-mapSize.x / 2, mapSize.x / 2); // Centered X range
+            int y = Random.Range(-mapSize.y / 2, mapSize.y / 2); // Centered Y range
 
-            if(tilemap.GetTile(tilePosition) == floorTile){
+            Vector3Int tilePosition = new Vector3Int(x, y, 0);
+
+            if (tilemap.GetTile(tilePosition) == floorTile) // Check if valid floor tile
+            {
                 spawnPosition = tilemap.GetCellCenterWorld(tilePosition);
                 return true;
             }
@@ -73,7 +75,7 @@ public class ItemSpawner : MonoBehaviour
             if (prefabToSpawn != null)
             {
                 Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
-                Debug.Log("Spawned item: " + prefabToSpawn.name);
+                //Debug.Log("Spawned item: " + prefabToSpawn.name);
             }
     }
 }

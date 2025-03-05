@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -13,6 +14,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private List<Image> healthIcons; // UI Heart slots
     [SerializeField] private Sprite fullHeartSprite;
     [SerializeField] private Sprite emptyHeartSprite;
+
+    [Header("Game Over UI")]
+    [SerializeField] private GameObject gameOverUI;
 
     private HealthSystem playerHealthSystem; 
 
@@ -27,6 +31,7 @@ public class UIManager : MonoBehaviour
             if (playerHealthSystem != null)
             {
                 playerHealthSystem.OnHealthChanged += UpdateHealthUI; // Subscribe to health changes
+                playerHealthSystem.OnDeath  += ShowGameOverScreen;
                 UpdateHealthUI(playerHealthSystem.CurrentHealth); // Initialize UI with correct health
             }
         }
@@ -62,8 +67,32 @@ public class UIManager : MonoBehaviour
     {
         for (int i = 0; i < healthIcons.Count; i++)
         {
-            healthIcons[i].sprite = i < currentHealth ? fullHeartSprite : emptyHeartSprite;
+            if (i < currentHealth)
+            {
+                healthIcons[i].sprite = fullHeartSprite; // Full heart for current health
+            }
+            else
+            {
+                healthIcons[i].sprite = emptyHeartSprite; // Empty heart for missing health
+            }
         }
     }
 
+    private void ShowGameOverScreen()
+    {
+        if (gameOverUI != null)
+        {
+            gameOverUI.SetActive(true); // Activate the Game Over panel when the player dies
+        }
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit(); // Quit the game
+    }
 }
