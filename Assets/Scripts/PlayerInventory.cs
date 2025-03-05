@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +8,10 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private int inventorySize = 3;
     private List<string> inventory = new List<string>();
     
+    /// <summary>
+    /// Add an item to the player's inventory
+    /// </summary>
+    /// <param name="item"></param>
     public void AddItem(GameObject item)
     {
         if (inventory.Count >= inventorySize) return;
@@ -29,6 +32,10 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Get the type of projectile based on the items in the inventory
+    /// </summary>
+    /// <returns></returns>
     public string GetProjectileType()
     {
         if (inventory.Count == 0) return null;

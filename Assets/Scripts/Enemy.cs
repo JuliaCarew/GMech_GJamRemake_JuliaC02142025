@@ -28,6 +28,10 @@ public class Enemy : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
     }
 
+    /// <summary>
+    /// Handle collision with the player or a projectile
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Enemy collided with: " + other.gameObject.name);
@@ -63,6 +67,10 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Show a hit effect above the enemy's head
+    /// </summary>
     private void ShowHitEffect()
     {
         if (hitEffectPrefab != null)

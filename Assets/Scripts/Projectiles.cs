@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectiles : MonoBehaviour
@@ -48,6 +46,9 @@ public class Projectiles : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Create a projectile based on the items in the player's inventory
+    /// </summary>
    public void CreateProjectile()
     {
         Debug.Log("Creating projectile...");
@@ -85,6 +86,9 @@ public class Projectiles : MonoBehaviour
     }
     }
 
+    /// <summary>
+    /// Fire the current projectile towards the mouse position
+    /// </summary>
     private void FireProjectile()
     {
         if (currentProjectile == null) return;
@@ -114,7 +118,11 @@ public class Projectiles : MonoBehaviour
         currentProjectile = null;
     }
 
-
+    /// <summary>
+    /// Get the correct projectile prefab based on the type
+    /// </summary>
+    /// <param name="projectileType"></param>
+    /// <returns></returns>
     private GameObject GetProjectilePrefab(string projectileType)
     {
         switch (projectileType)
@@ -134,20 +142,24 @@ public class Projectiles : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Check for collision with an enemy and apply damage
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter2D(Collider2D other)
-{
-    Debug.Log("Projectile collided with: " + other.gameObject.name);  
-
-    if (other.CompareTag("Enemy"))
     {
-        Debug.Log("Projectile hit an enemy!");
-        HealthSystem enemyHealth = other.GetComponent<HealthSystem>();
-        if (enemyHealth != null)
+        Debug.Log("Projectile collided with: " + other.gameObject.name);  
+
+        if (other.CompareTag("Enemy"))
         {
-            enemyHealth.TakeDamage(damage);
-            Debug.Log("Enemy took " + damage + " damage.");
+            Debug.Log("Projectile hit an enemy!");
+            HealthSystem enemyHealth = other.GetComponent<HealthSystem>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(damage);
+                Debug.Log("Enemy took " + damage + " damage.");
+            }
+            Destroy(gameObject); // Destroy the projectile on impact
         }
-        Destroy(gameObject); // Destroy the projectile on impact
     }
-}
 }

@@ -17,6 +17,10 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(SpawnWave());
     }
 
+    /// <summary>
+    /// Spawn a wave of enemies every [timeBetweenWaves] seconds, but only if the previous wave has been defeated
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator SpawnWave()
     {
         while (true)
@@ -37,6 +41,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawn enemy and add it to the activeEnemies list + give it a HealthSystem component
+    /// </summary>
     private void SpawnEnemy()
     {
         if (spawnPoints.Length == 0)

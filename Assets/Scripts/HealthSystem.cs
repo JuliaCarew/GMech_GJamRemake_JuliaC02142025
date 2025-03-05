@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -18,10 +16,14 @@ public class HealthSystem : MonoBehaviour
         OnHealthChanged?.Invoke(currentHealth);
     }
 
+    /// <summary>
+    /// Apply damage to the health system
+    /// </summary>
+    /// <param name="damage"></param>
     public void TakeDamage(int damage)
     {
         Debug.Log($"{gameObject.name} took {damage} damage.");
-        
+
         if (currentHealth > 0)
         {
             currentHealth -= damage;
@@ -33,7 +35,7 @@ public class HealthSystem : MonoBehaviour
             }
         }
     }
-
+    
     private void Die()
     {
         Debug.Log(gameObject.name + " has died!");

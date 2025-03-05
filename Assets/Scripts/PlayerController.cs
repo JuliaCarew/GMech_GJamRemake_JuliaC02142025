@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -43,6 +41,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Check if the target position is walkable
+    /// </summary>
+    /// <param name="targetPosition"></param>
+    /// <returns></returns>
     private bool IsPositionWalkable(Vector2 targetPosition)
     {
         Vector3Int targetCell = tilemap.WorldToCell(targetPosition);
