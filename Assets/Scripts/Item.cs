@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    private PlayerInventory playerInventory;
+    GameManager gameManager;
 
     private void Start()
     {
@@ -10,7 +10,7 @@ public class Item : MonoBehaviour
 
         if (playerObject != null)
         {
-            playerInventory = playerObject.GetComponent<PlayerInventory>();
+            gameManager.playerInventory = playerObject.GetComponent<PlayerInventory>();
         }
     }
 

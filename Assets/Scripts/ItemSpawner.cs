@@ -7,6 +7,8 @@ public class ItemSpawner : MonoBehaviour
     public GameObject woodPrefab;
     public GameObject rockPrefab;
     public GameObject bottlePrefab;
+    // need to make GameObject prefabs of all 26 letters
+
 
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private TileBase floorTile;
@@ -55,6 +57,7 @@ public class ItemSpawner : MonoBehaviour
         spawnPosition = Vector2.zero;
         return false;
     }
+    // NOTE: change this to spawn at set spawnpoint positions instead of random positions (or create level design with set spawnpoints)
 
     /// <summary>
     /// Spawn a random item at the given position.

@@ -69,4 +69,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    // have a showhiteffect method similar to the enemy script and play a sound
 }

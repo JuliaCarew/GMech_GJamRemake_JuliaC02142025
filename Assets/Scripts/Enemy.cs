@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int damageToPlayer = 1;
 
     private HealthSystem healthSystem;
+    GameManager gameManager;
     [SerializeField] private GameObject hitEffectPrefab;
 
     private void Start()

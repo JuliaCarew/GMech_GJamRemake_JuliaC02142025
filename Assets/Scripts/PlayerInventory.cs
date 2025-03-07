@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] private UIManager uiManager;
+    GameManager gameManager;
 
     [SerializeField] private int inventorySize = 3;
     private List<string> inventory = new List<string>();
@@ -53,4 +54,12 @@ public class PlayerInventory : MonoBehaviour
         //Debug.Log("Inventory cleared!");
         inventory.Clear(); // Clear inventory when a projectile is created
     }   
+
+    // make method to get rid of any item from inventory by clicking and dragging it out of the inventory UI (use the UIManager script)
+    public void RemoveItem(string itemName) // fix ??
+    {
+        // need to read left mouse button click and drag to recognize what item is selected and update position
+        inventory.Remove(itemName);
+        uiManager.UpdateInventoryUI(inventory); // Update UI
+    }
 }
