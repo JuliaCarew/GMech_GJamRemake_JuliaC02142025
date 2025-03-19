@@ -18,3 +18,7 @@ public class LevelManager : MonoBehaviour
 }
 // handle scene transitions to load the next level when the player reaches the end of the current level
 // when the player opens the door load next scene (have public list to drop scene levels in inspector?)
+
+// Level set up
+// can either do so through inspector or reading text files through code
+// may be easier since working with letter [refabs to do inspector

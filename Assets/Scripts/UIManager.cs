@@ -7,33 +7,21 @@ public class UIManager : MonoBehaviour
 {
     [Header("Inventory UI")]
     [SerializeField] private List<Image> itemSlots; // UI Image slots
-    [SerializeField] private Sprite woodSprite, rockSprite, bottleSprite, emptySprite; // Item sprites
-
-    [Header("Health UI")]
-    [SerializeField] private List<Image> healthIcons; // UI Heart slots
-    [SerializeField] private Sprite fullHeartSprite;
-    [SerializeField] private Sprite emptyHeartSprite;
+    [SerializeField] private Sprite woodSprite, rockSprite, bottleSprite, emptySprite; // Item sprites (change to alphabet)
 
     [Header("Game Over UI")]
     [SerializeField] private GameObject gameOverUI;
 
-    private HealthSystem playerHealthSystem; 
+    private HealthSystem playerHealthSystem;
+
+    // implement hint/riddle UI panels that can be easily called to show at diffeent times for each level
+    [Header("Riddles")]
+    [SerializeField] private GameObject riddleTextUI;
+    [SerializeField] private GameObject HintUI;
 
     private void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        
-        if (player != null)
-        {
-            playerHealthSystem = player.GetComponent<HealthSystem>();
-
-            if (playerHealthSystem != null)
-            {
-                playerHealthSystem.OnHealthChanged += UpdateHealthUI; // Subscribe to health changes
-                playerHealthSystem.OnDeath  += ShowGameOverScreen;
-                UpdateHealthUI(playerHealthSystem.CurrentHealth); // Initialize UI with correct health
-            }
-        }
     }
 
     public void UpdateInventoryUI(List<string> inventory)
@@ -53,7 +41,7 @@ public class UIManager : MonoBehaviour
 
     private Sprite GetItemSprite(string itemName)
     {
-        return itemName switch
+        return itemName switch // change to alphabet
         {
             "Wood" => woodSprite,
             "Rock" => rockSprite,
@@ -61,20 +49,14 @@ public class UIManager : MonoBehaviour
             _ => emptySprite,
         };
     }
-
-    public void UpdateHealthUI(int currentHealth)
+   
+    private void UpdateRiddle()
     {
-        for (int i = 0; i < healthIcons.Count; i++)
-        {
-            if (i < currentHealth)
-            {
-                healthIcons[i].sprite = fullHeartSprite; // Full heart for current health
-            }
-            else
-            {
-                healthIcons[i].sprite = emptyHeartSprite; // Empty heart for missing health
-            }
-        }
+        riddleTextUI.SetActive(true);
+    }
+    private void ShowHint()
+    {
+        HintUI.SetActive(true);
     }
 
     private void ShowGameOverScreen()
@@ -92,6 +74,6 @@ public class UIManager : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit(); // Quit the game
+        Application.Quit(); 
     }
 }
