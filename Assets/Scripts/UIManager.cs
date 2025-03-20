@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
     [Header("Inventory UI")]
     [SerializeField] private List<Image> itemSlots; // UI Image slots
-    [SerializeField] private Sprite woodSprite, rockSprite, bottleSprite, emptySprite; // Item sprites (change to alphabet)
+    [SerializeField] private Sprite emptySprite,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z; 
 
     [Header("Game Over UI")]
     [SerializeField] private GameObject gameOverUI;
@@ -31,21 +31,46 @@ public class UIManager : MonoBehaviour
             if (i < inventory.Count)
             {
                 itemSlots[i].sprite = GetItemSprite(inventory[i]);
+                itemSlots[i].enabled = true;
             }
             else
             {
                 itemSlots[i].sprite = emptySprite;
+                itemSlots[i].enabled = false;
             }
         }
     }
 
     private Sprite GetItemSprite(string itemName)
     {
-        return itemName switch // change to alphabet
+        return itemName.ToUpper() switch // change to alphabet
         {
-            "Wood" => woodSprite,
-            "Rock" => rockSprite,
-            "Bottle" => bottleSprite,
+            "A" => a,
+            "B" => b,
+            "C" => c,
+            "D" => d,
+            "E" => e,
+            "F" => f,
+            "G" => g,
+            "H" => h,
+            "I" => i,
+            "J" => j,
+            "K" => k,
+            "L" => l,
+            "M" => m,
+            "N" => n,
+            "O" => o,
+            "P" => p,
+            "Q" => q,
+            "R" => r,
+            "S" => s,
+            "T" => t,
+            "U" => u,
+            "V" => v,
+            "W" => w,
+            "X" => x,
+            "Y" => y,
+            "Z" => z,
             _ => emptySprite,
         };
     }

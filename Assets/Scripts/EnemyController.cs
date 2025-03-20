@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SpawnWave());
+        //StartCoroutine(SpawnWave());
     }
 
     /// <summary>

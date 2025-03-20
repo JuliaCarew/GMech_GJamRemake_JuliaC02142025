@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     [Header("Audio Clips")]
     [SerializeField] private AudioClip backgroundMusic;  // Background music
     [SerializeField] private AudioClip pickupSound;      // Pickup item sound
+    [SerializeField] private AudioClip dropSound;        // Drop item sound
     [SerializeField] private AudioClip shootSound;       // Shoot sound effect
 
     public static AudioManager Instance;
@@ -46,7 +47,14 @@ public class AudioManager : MonoBehaviour
     {
         if (sfxSource != null && pickupSound != null)
         {
-            sfxSource.PlayOneShot(pickupSound); // Play sound once
+            sfxSource.PlayOneShot(pickupSound); 
+        }
+    }
+    public void PlayDropSound()
+    {
+        if (sfxSource != null && pickupSound != null)
+        {
+            sfxSource.PlayOneShot(dropSound); 
         }
     }
 
@@ -54,7 +62,7 @@ public class AudioManager : MonoBehaviour
     {
         if (sfxSource != null && shootSound != null)
         {
-            sfxSource.PlayOneShot(shootSound); // Play sound once
+            sfxSource.PlayOneShot(shootSound); 
         }
     }
 

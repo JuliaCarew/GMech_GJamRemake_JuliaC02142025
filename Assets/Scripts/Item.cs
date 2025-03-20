@@ -3,30 +3,43 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     GameManager gameManager;
+    public PlayerInventory playerInventory;
+    public GameObject playerObject;
 
-    private void Start()
+    private void Awake()
     {
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        //GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
         if (playerObject != null)
         {
-            gameManager.playerInventory = playerObject.GetComponent<PlayerInventory>();
+            playerInventory = playerObject.GetComponent<PlayerInventory>(); // getting null reference 
+            if (playerInventory == null)
+            {
+                Debug.LogError("PlayerInventory is null. Ensure the player has a PlayerInventory component.");
+            }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        //Debug.Log($"Collided with: {other.gameObject.name}");
-        if (other.CompareTag("Player") ) //&& playerInventory != null
+    public void PickUp() {
+        if (playerInventory == null)
         {
-            //Debug.Log("Player picked up item!");
-            PlayerInventory playerInventory = other.GetComponent<PlayerInventory>();
-            AudioManager.Instance.PlayPickupSound();
-            
-            if (playerInventory != null)
-            {
-                playerInventory.AddItem(gameObject);
-            }
+            Debug.LogError("Cannot pick up item. PlayerInventory is still null.");
+            return;
         }
+        Debug.Log("Player picked up item!");
+        AudioManager.Instance.PlayPickupSound();
+        playerInventory.AddItem(gameObject);
+        Destroy(gameObject);
+    }
+    public void Drop() {
+        if (playerInventory == null)
+        {
+            Debug.LogError("Cannot drop item. PlayerInventory is still null.");
+            return;
+        }
+        
+        Debug.Log("Player dropped item!");
+        AudioManager.Instance.PlayDropSound();
+        playerInventory.RemoveItem(gameObject.name);
     }
 }

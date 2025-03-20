@@ -1,14 +1,21 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] private UIManager uiManager;
     GameManager gameManager;
+    private Item nearbyItem;
 
     [SerializeField] private int inventorySize = 5;
     private List<string> inventory = new List<string>();
     
+    private void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+        //item = GetComponent<Item>(); // recognize object that player is colliding with
+    }
     /// <summary>
     /// Add an item to the player's inventory
     /// </summary>
@@ -19,7 +26,7 @@ public class PlayerInventory : MonoBehaviour
 
         string itemName = item.name.Replace("(Clone)", "").Trim();
         inventory.Add(itemName);
-        //Debug.Log("Item added to inventory: " + itemName);
+        Debug.Log("Item added to inventory: " + itemName);
         Destroy(item);
 
         uiManager.UpdateInventoryUI(inventory); // Update UI
@@ -32,7 +39,33 @@ public class PlayerInventory : MonoBehaviour
             FindObjectOfType<Projectiles>().CreateProjectile();
         }
     }
-
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Item"))
+        {
+            nearbyItem = other.GetComponent<Item>();
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Item"))
+        {
+            nearbyItem = null;
+        }
+    }
+    private void Update(){
+        if (nearbyItem != null)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                nearbyItem.PickUp();
+            }
+            else if (Input.GetKeyDown(KeyCode.Q))
+            {
+                nearbyItem.Drop();
+            }
+        }
+    }
     /// <summary>
     /// Get the type of projectile based on the items in the inventory
     /// </summary>
