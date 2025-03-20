@@ -6,7 +6,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private UIManager uiManager;
     GameManager gameManager;
 
-    [SerializeField] private int inventorySize = 3;
+    [SerializeField] private int inventorySize = 5;
     private List<string> inventory = new List<string>();
     
     /// <summary>

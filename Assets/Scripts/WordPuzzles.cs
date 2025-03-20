@@ -30,26 +30,26 @@ public class WordPuzzles : MonoBehaviour
     private void Chair()
     {
         // Riddle:
-        //     “I am normally below you.
+        //     ï¿½I am normally below you.
         //     If you remove my 1st letter, you'll find me above you.
         //     If you remove my 1st & 2nd letters, you can't see me.
-        //     What am I?” 
+        //     What am I?ï¿½ 
         // secret word: CHAIR
         // Letter set: C,H,A,I,R,T,A,G,P
     }
     private void Shirt()
     {
         // Riddle:
-        //     “I have a neck, but no head.
+        //     ï¿½I have a neck, but no head.
         //     I have two arms, but no hands.
-        //     What am I?”  
+        //     What am I?ï¿½  
         // secret word: SHIRT
         // Letter set: S,H,I,R,T,F,E,O,I 
     }
     private void Light()
     {
         // Riddle:
-        //     “What can go through glass without breaking it?” 
+        //     ï¿½What can go through glass without breaking it?ï¿½ 
         // secret word: LIGHT
         // Letter set: L,I,G,H,T,F,C,U,E,R
     }
@@ -59,29 +59,29 @@ public class WordPuzzles : MonoBehaviour
     private void Wheat()
     {
         // Riddle:
-        //     “If you take away first letter it is something you get from sun,
+        //     ï¿½If you take away first letter it is something you get from sun,
         //     if you remove second letter you will get something to eat,
         //     if you remove third letter you get a word you use in pointing at
-        //     and if you remove the fourth letter you get something to drink. What is it?” 
+        //     and if you remove the fourth letter you get something to drink. What is it?ï¿½ 
         // secret word: WHEAT
         // Letter set: W,H,E,A,T,C,S,E,Y,A,F,S,Q,X,B,K
     }
     private void Cause()
     {
         // Riddle: 
-        //    “When I'm lost, still some will try. 
+        //    ï¿½When I'm lost, still some will try. 
         //    When common I'm shared by many. 
         //    I can be a contracted reason why.
         //    A rebel may not have any. 
-        //    What am I ?” 
+        //    What am I ?ï¿½ 
         // secret word: CAUSE
         // Letter set: C,A,U,S,E,R,I,O,A,S,G,H,E,N,B,P,S
     }
     private void Queue()
     {
         // Riddle:
-        //    “What English word retains the same pronunciation,
-        //    even after you take away four of its five letter?” 
+        //    ï¿½What English word retains the same pronunciation,
+        //    even after you take away four of its five letter?ï¿½ 
         // secret word: QUEUE
         // Letter set: Q,U,E,U,E,T,G,D,E,A,F,B,M,L,E,E,T,S
     }
@@ -91,14 +91,14 @@ public class WordPuzzles : MonoBehaviour
     private void Paper()
     {
         // Riddle:
-        //     “My first came from a man Chinese 
+        //     ï¿½My first came from a man Chinese 
         //    Made with devices thrown into seas
 
         //    Back in the day when we were schooled
         //    You would often have seen me ruled
 
         //    Technology wills my defeat
-        //    By rendering me obsolete” 
+        //    By rendering me obsoleteï¿½ 
         // secret word: PAPER
         // Letter set: all
         // Hint: after 2 wrong guesses, show
