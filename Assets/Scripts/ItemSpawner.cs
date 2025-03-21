@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 public class ItemSpawner : MonoBehaviour
 {
     public GameObject A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z;
+    public GameObject LetterSetCHAIR, LetterSetSHIRT, LetterSetLIGHT;
 
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private TileBase floorTile;
@@ -14,7 +15,8 @@ public class ItemSpawner : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(SpawnItemCoroutine());
+        //StartCoroutine(SpawnItemCoroutine());
+        LetterSetCHAIR.SetActive(true);
     }
 
     private IEnumerator SpawnItemCoroutine()

@@ -56,19 +56,5 @@ public class PlayerController : MonoBehaviour
         // Check if the tile is a floor tile
         return tileAtTarget == floorTile;
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Enemy") || other.CompareTag("EnemyProjectile"))
-        {
-            Debug.Log("Player hit by an enemy!");
-            HealthSystem playerHealth = GetComponent<HealthSystem>();
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(1);
-            }
-        }
-    }
-
     // have a showhiteffect method similar to the enemy script and play a sound
 }

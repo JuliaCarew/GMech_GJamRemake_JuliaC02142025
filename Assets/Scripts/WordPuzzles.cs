@@ -16,7 +16,11 @@ public class WordPuzzles : MonoBehaviour
     public string secretWord { get; private set; }
     
     public int guessCount;
+    private GuessCrate guessCrate;
     
+    private void Start(){
+        guessCrate = FindObjectOfType<GuessCrate>();
+    }
     private char[] letters = { // pull from this to get letter set (find a way so i dont need a new array for each word)
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 
         'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',

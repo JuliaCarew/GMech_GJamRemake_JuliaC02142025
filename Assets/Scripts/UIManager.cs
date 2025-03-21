@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,12 +14,15 @@ public class UIManager : MonoBehaviour
     [Header("Game Over UI")]
     [SerializeField] private GameObject gameOverUI;
 
-    private HealthSystem playerHealthSystem;
-
     // implement hint/riddle UI panels that can be easily called to show at diffeent times for each level
     [Header("Riddles")]
     [SerializeField] private GameObject riddleTextUI;
     [SerializeField] private GameObject HintUI;
+    [SerializeField] private GameObject correctGuessUI;
+    [SerializeField] private TextMeshProUGUI correctGuessText;
+    [SerializeField] private GameObject wrongGuessUI;
+
+    [SerializeField] private GameObject controlHUD;
 
     private void Start()
     {
@@ -90,6 +95,39 @@ public class UIManager : MonoBehaviour
         {
             gameOverUI.SetActive(true); // Activate the Game Over panel when the player dies
         }
+    }
+    public void ShowControlHUD()
+    {
+        controlHUD.SetActive(true);
+    }
+    public void HideControlHUD()
+    {
+        controlHUD.SetActive(false);
+    }
+
+    public void ShowCorrectGuessUI(string word)
+    {
+        if (correctGuessUI != null && correctGuessText != null)
+        {
+            correctGuessText.text = word; // Display the provided word
+            correctGuessUI.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("CorrectGuessUI or CorrectGuessText is not assigned.");
+        }
+    }
+    public void ShowWrongGuessUI()
+    {
+        StartCoroutine(WrongGuessUI());
+    }
+    public IEnumerator WrongGuessUI()
+    {
+        wrongGuessUI.SetActive(true);
+        Debug.Log("Wrong guess UI shown.");
+        yield return new WaitForSeconds(2);
+        wrongGuessUI.SetActive(false);
+        Debug.Log("Wrong guess UI hidden.");
     }
 
     public void RestartGame()

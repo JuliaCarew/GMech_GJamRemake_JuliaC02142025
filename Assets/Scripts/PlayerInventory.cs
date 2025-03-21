@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
+    // make this a singleton
     [SerializeField] private UIManager uiManager;
     GameManager gameManager;
     private Item nearbyItem;
+    private GuessCrate guessCrate;
+    private bool isNearGuessCrate = false;
 
     [SerializeField] private int inventorySize = 5;
-    private List<string> inventory = new List<string>();
+    public List<string> inventory = new List<string>();
     
     private void Start()
     {
@@ -36,7 +39,6 @@ public class PlayerInventory : MonoBehaviour
         if (inventory.Count == inventorySize)
         {
             //Debug.Log("Inventory full! Ready to create projectile.");
-            FindObjectOfType<Projectiles>().CreateProjectile();
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -45,6 +47,12 @@ public class PlayerInventory : MonoBehaviour
         {
             nearbyItem = other.GetComponent<Item>();
         }
+        if (other.CompareTag("GuessCrate"))
+        {
+            guessCrate = other.GetComponent<GuessCrate>();
+            isNearGuessCrate = true;
+            Debug.Log("Player entered Guess Crate zone.");
+        }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -52,9 +60,16 @@ public class PlayerInventory : MonoBehaviour
         {
             nearbyItem = null;
         }
+        else if (other.CompareTag("GuessCrate"))
+        {
+            isNearGuessCrate = false;
+            guessCrate = null;
+            Debug.Log("Player left Guess Crate zone.");
+        }
     }
+    
     private void Update(){
-        if (nearbyItem != null)
+        if (nearbyItem != null) // item input
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -64,6 +79,11 @@ public class PlayerInventory : MonoBehaviour
             {
                 nearbyItem.Drop();
             }
+        }
+        if (isNearGuessCrate && Input.GetKeyDown(KeyCode.F)) // guess input
+        {
+            Debug.Log("Reading F key input. Submitting Guess.");
+            guessCrate.SubmitGuess();
         }
     }
     /// <summary>
@@ -96,3 +116,4 @@ public class PlayerInventory : MonoBehaviour
         uiManager.UpdateInventoryUI(inventory); // Update UI
     }
 }
+// next wednesday animedia fest March 26th 8:30-9:30 lunch davis hall 12:00-1:00

@@ -2,20 +2,16 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    GameManager gameManager;
     public PlayerInventory playerInventory;
     public GameObject playerObject;
 
     private void Awake()
     {
-        //GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-
         if (playerObject != null)
         {
-            playerInventory = playerObject.GetComponent<PlayerInventory>(); // getting null reference 
-            if (playerInventory == null)
+            if (playerObject != null && playerInventory == null)
             {
-                Debug.LogError("PlayerInventory is null. Ensure the player has a PlayerInventory component.");
+                playerInventory = playerObject.GetComponent<PlayerInventory>();
             }
         }
     }
@@ -37,7 +33,6 @@ public class Item : MonoBehaviour
             Debug.LogError("Cannot drop item. PlayerInventory is still null.");
             return;
         }
-        
         Debug.Log("Player dropped item!");
         AudioManager.Instance.PlayDropSound();
         playerInventory.RemoveItem(gameObject.name);
