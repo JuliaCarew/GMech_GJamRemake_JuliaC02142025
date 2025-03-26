@@ -9,6 +9,7 @@ TagManager:
   - EnemyProjectile
   - Projectile
   - GuessCrate
+  - ClearCrate
   layers:
   - Default
   - TransparentFX

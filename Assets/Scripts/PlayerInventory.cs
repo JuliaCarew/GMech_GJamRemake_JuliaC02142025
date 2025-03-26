@@ -9,7 +9,9 @@ public class PlayerInventory : MonoBehaviour
     GameManager gameManager;
     private Item nearbyItem;
     private GuessCrate guessCrate;
+    private ClearCrate clearCrate;
     private bool isNearGuessCrate = false;
+    private bool isNearClearCrate = false;
 
     [SerializeField] private int inventorySize = 5;
     public List<string> inventory = new List<string>();
@@ -38,7 +40,8 @@ public class PlayerInventory : MonoBehaviour
         //create projectile
         if (inventory.Count == inventorySize)
         {
-            //Debug.Log("Inventory full! Ready to create projectile.");
+            Debug.Log("Inventory full!");
+            return; // make it so the player can't pick up any more
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -53,6 +56,12 @@ public class PlayerInventory : MonoBehaviour
             isNearGuessCrate = true;
             Debug.Log("Player entered Guess Crate zone.");
         }
+        if (other.CompareTag("ClearCrate"))
+        {
+            clearCrate = other.GetComponent<ClearCrate>();
+            isNearClearCrate = true;
+            Debug.Log("Player entered CLEAR Crate zone.");
+        }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -65,6 +74,12 @@ public class PlayerInventory : MonoBehaviour
             isNearGuessCrate = false;
             guessCrate = null;
             Debug.Log("Player left Guess Crate zone.");
+        }
+        else if (other.CompareTag("ClearCrate"))
+        {
+            isNearClearCrate = false;
+            clearCrate = null;
+            Debug.Log("Player left Clear Crate zone.");
         }
     }
     
@@ -84,6 +99,10 @@ public class PlayerInventory : MonoBehaviour
         {
             Debug.Log("Reading F key input. Submitting Guess.");
             guessCrate.SubmitGuess();
+        }
+        if (isNearClearCrate && Input.GetKeyDown(KeyCode.F)) {
+            Debug.Log("Reading F key input. Clearing player inventory");
+            clearCrate.Clear();           
         }
     }
     /// <summary>
@@ -106,6 +125,7 @@ public class PlayerInventory : MonoBehaviour
     {
         //Debug.Log("Inventory cleared!");
         inventory.Clear(); // Clear inventory when a projectile is created
+        uiManager.UpdateInventoryUI(inventory);
     }   
 
     // make method to get rid of any item from inventory by clicking and dragging it out of the inventory UI (use the UIManager script)
@@ -117,3 +137,5 @@ public class PlayerInventory : MonoBehaviour
     }
 }
 // next wednesday animedia fest March 26th 8:30-9:30 lunch davis hall 12:00-1:00
+
+// !! make sure you can't pick up any more letters atfer you have a full inventory

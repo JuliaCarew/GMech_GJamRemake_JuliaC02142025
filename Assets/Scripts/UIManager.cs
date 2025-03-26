@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour // singleton
 {
     [Header("Inventory UI")]
     [SerializeField] private List<Image> itemSlots; // UI Image slots
@@ -22,7 +22,19 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI correctGuessText;
     [SerializeField] private GameObject wrongGuessUI;
 
+    [Header("HUD UI")]
     [SerializeField] private GameObject controlHUD;
+    [SerializeField] private GameObject clearHUD;
+
+    [Header("Unique Riddles")]
+    [SerializeField] private GameObject riddleTextUICHAIR;
+    [SerializeField] private GameObject riddleTextUISHIRT;
+    [SerializeField] private GameObject riddleTextUILIGHT;
+
+    [Header("Unique Hints")]
+    [SerializeField] private GameObject hintUICHAIR;
+    [SerializeField] private GameObject hintUISHIRT;
+    [SerializeField] private GameObject hintUILIGHT;
 
     private void Start()
     {
@@ -80,13 +92,39 @@ public class UIManager : MonoBehaviour
         };
     }
    
-    private void UpdateRiddle()
+    public void UpdateRiddle(string secretWord)
     {
         riddleTextUI.SetActive(true);
+        // set up multiple riddle GameObjects to call through method by secretword
+        if (secretWord == "chair")
+        {
+            riddleTextUICHAIR.SetActive(true);
+        }
+        if (secretWord == "shirt")
+        {
+            riddleTextUISHIRT.SetActive(true);
+        }
+        if (secretWord == "light")
+        {
+            riddleTextUILIGHT.SetActive(true);
+        }
     }
-    private void ShowHint()
+    public void ShowHint(string secretWord)
     {
         HintUI.SetActive(true);
+        // set up multiple hints to call through method
+        if (secretWord == "chair")
+        {
+            hintUICHAIR.SetActive(true);
+        }
+        if (secretWord == "shirt")
+        {
+            hintUISHIRT.SetActive(true);
+        }
+        if (secretWord == "light")
+        {
+            hintUILIGHT.SetActive(true);
+        }
     }
 
     private void ShowGameOverScreen()
@@ -103,6 +141,14 @@ public class UIManager : MonoBehaviour
     public void HideControlHUD()
     {
         controlHUD.SetActive(false);
+    }
+    public void ShowClearHUD()
+    {
+        clearHUD.SetActive(true);
+    }
+    public void HideClearHUD()
+    {
+        clearHUD.SetActive(false);
     }
 
     public void ShowCorrectGuessUI(string word)

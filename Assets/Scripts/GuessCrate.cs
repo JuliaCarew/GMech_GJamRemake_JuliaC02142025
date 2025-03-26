@@ -7,7 +7,7 @@ public class GuessCrate : MonoBehaviour
 {
     // manage and recognize unique riddles/words per level
     public UIManager uiManager;
-    private PlayerInventory playerInventory;    
+    private PlayerInventory playerInventory;
     public string secretWord { get; private set; }
     private string guessWord;
     public int guessCount;
@@ -47,8 +47,7 @@ public class GuessCrate : MonoBehaviour
             // only show for a few seconds
             // go to next level
         }
-        else
-        {
+        else {
             Debug.Log("Wrong answer. Try again.");
             uiManager.ShowWrongGuessUI();
             guessCount++;

@@ -10,7 +10,7 @@ public class ItemSpawner : MonoBehaviour
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private TileBase floorTile;
     [SerializeField] private Vector2Int mapSize = new Vector2Int(20,10); // map is 20x10 for now
-    [SerializeField] private float spawnInterval = 1.3f;
+    //[SerializeField] private float spawnInterval = 1.3f;
 
 
     void Start()
@@ -18,19 +18,12 @@ public class ItemSpawner : MonoBehaviour
         //StartCoroutine(SpawnItemCoroutine());
         LetterSetCHAIR.SetActive(true);
     }
-
-    private IEnumerator SpawnItemCoroutine()
+    public void ChairLetterSet()
     {
-        while (true)
-        {
-            Vector2 spawnPosition;
-            if (GetRandomPosition(out spawnPosition))
-            {
-                SpawnItem(spawnPosition);
-            }
-            yield return new WaitForSeconds(spawnInterval);
-        }
+        Debug.Log("Item Spawner: spawned CHAIR letter set");
+        LetterSetCHAIR.SetActive(true);
     }
+    
 
     /// <summary>
     /// Get a random position on the map.
@@ -56,49 +49,4 @@ public class ItemSpawner : MonoBehaviour
         return false;
     }
     // NOTE: change this to spawn at set spawnpoint positions instead of random positions (or create level design with set spawnpoints)
-
-    /// <summary>
-    /// Spawn a random item at the given position.
-    /// </summary>
-    /// <param name="spawnPosition"></param>
-    private void SpawnItem(Vector2 spawnPosition)
-    {
-        int random = Random.Range(0, 26);
-        GameObject prefabToSpawn = random switch
-            {
-                0 => A,
-                1 => B,
-                2 => C,
-                3 => D,
-                4 => E,
-                5 => F,
-                6 => G,
-                7 => H,
-                8 => I,
-                9 => J,
-                10 => K,
-                11 => L,
-                12 => M,
-                13 => N,
-                14 => O,
-                15 => P,
-                16 => Q,
-                17 => R,
-                18 => S,
-                19 => T,
-                20 => U,
-                21 => V,
-                22 => W,
-                23 => X,
-                24 => Y,
-                25 => Z,
-                _ => null
-            };
-
-            if (prefabToSpawn != null)
-            {
-                Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
-                Debug.Log("Spawned item: " + prefabToSpawn.name);
-            }
-    }
 }

@@ -4,7 +4,6 @@ using UnityEngine.Tilemaps;
 public class PlayerController : MonoBehaviour
 {
     public GameObject player;
-
     public Vector2 Position {get; private set;}
     public Vector2 LookAtDirection {get; private set;}
 
