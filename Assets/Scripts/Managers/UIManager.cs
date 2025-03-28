@@ -15,9 +15,13 @@ public class UIManager : MonoBehaviour // singleton
     [SerializeField] private GameObject gameOverUI;
 
     // implement hint/riddle UI panels that can be easily called to show at diffeent times for each level
-    [Header("Riddles")]
+    [Header("Riddles & Hints UI")]
     [SerializeField] private GameObject riddleTextUI;
-    [SerializeField] private GameObject HintUI;
+    [SerializeField] private TextMeshProUGUI riddleTextComponent;
+    [SerializeField] private GameObject hintUI;
+    [SerializeField] private TextMeshProUGUI hintTextComponent;
+
+    [Header("Guess Feedback UI")]
     [SerializeField] private GameObject correctGuessUI;
     [SerializeField] private TextMeshProUGUI correctGuessText;
     [SerializeField] private GameObject wrongGuessUI;
@@ -26,19 +30,14 @@ public class UIManager : MonoBehaviour // singleton
     [SerializeField] private GameObject controlHUD;
     [SerializeField] private GameObject clearHUD;
 
-    [Header("Unique Riddles")]
-    [SerializeField] private GameObject riddleTextUICHAIR;
-    [SerializeField] private GameObject riddleTextUISHIRT;
-    [SerializeField] private GameObject riddleTextUILIGHT;
-
-    [Header("Unique Hints")]
-    [SerializeField] private GameObject hintUICHAIR;
-    [SerializeField] private GameObject hintUISHIRT;
-    [SerializeField] private GameObject hintUILIGHT;
-
     private void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        HideRiddleUI();
+        HideHintUI();
+        HideCorrectGuessUI();
+        HideWrongGuessUI();
     }
 
     public void UpdateInventoryUI(List<string> inventory)
@@ -92,38 +91,35 @@ public class UIManager : MonoBehaviour // singleton
         };
     }
    
-    public void UpdateRiddle(string secretWord)
+    public void UpdateRiddle(string riddleText)
     {
-        riddleTextUI.SetActive(true);
-        // set up multiple riddle GameObjects to call through method by secretword
-        if (secretWord == "chair")
+        if (riddleTextUI != null && riddleTextComponent != null)
         {
-            riddleTextUICHAIR.SetActive(true);
-        }
-        if (secretWord == "shirt")
-        {
-            riddleTextUISHIRT.SetActive(true);
-        }
-        if (secretWord == "light")
-        {
-            riddleTextUILIGHT.SetActive(true);
+            riddleTextComponent.text = riddleText;
+            riddleTextUI.SetActive(true);
         }
     }
-    public void ShowHint(string secretWord)
+    public void ShowHint(string hintText)
     {
-        HintUI.SetActive(true);
-        // set up multiple hints to call through method
-        if (secretWord == "chair")
+        if (hintUI != null && hintTextComponent != null)
         {
-            hintUICHAIR.SetActive(true);
+            hintTextComponent.text = hintText;
+            hintUI.SetActive(true);
         }
-        if (secretWord == "shirt")
+    }
+    public void HideRiddleUI()
+    {
+        if (riddleTextUI != null)
         {
-            hintUISHIRT.SetActive(true);
+            riddleTextUI.SetActive(false);
         }
-        if (secretWord == "light")
+    }
+
+    public void HideHintUI()
+    {
+        if (hintUI != null)
         {
-            hintUILIGHT.SetActive(true);
+            hintUI.SetActive(false);
         }
     }
 
@@ -153,10 +149,17 @@ public class UIManager : MonoBehaviour // singleton
 
     public void ShowCorrectGuessUI(string word)
     {
+        StartCoroutine(CorrectGuessCoroutine(word));
+    }
+
+    private IEnumerator CorrectGuessCoroutine(string word)
+    {
         if (correctGuessUI != null && correctGuessText != null)
         {
-            correctGuessText.text = word; // Display the provided word
+            correctGuessText.text = word;
             correctGuessUI.SetActive(true);
+            yield return new WaitForSeconds(3);
+            correctGuessUI.SetActive(false);
         }
         else
         {
@@ -165,15 +168,32 @@ public class UIManager : MonoBehaviour // singleton
     }
     public void ShowWrongGuessUI()
     {
-        StartCoroutine(WrongGuessUI());
+        StartCoroutine(WrongGuessCoroutine());
     }
-    public IEnumerator WrongGuessUI()
+
+    private IEnumerator WrongGuessCoroutine()
     {
         wrongGuessUI.SetActive(true);
         Debug.Log("Wrong guess UI shown.");
         yield return new WaitForSeconds(2);
         wrongGuessUI.SetActive(false);
         Debug.Log("Wrong guess UI hidden.");
+    }
+
+    public void HideCorrectGuessUI()
+    {
+        if (correctGuessUI != null)
+        {
+            correctGuessUI.SetActive(false);
+        }
+    }
+
+    public void HideWrongGuessUI()
+    {
+        if (wrongGuessUI != null)
+        {
+            wrongGuessUI.SetActive(false);
+        }
     }
 
     public void RestartGame()

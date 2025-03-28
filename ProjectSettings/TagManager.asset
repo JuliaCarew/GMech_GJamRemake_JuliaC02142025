@@ -10,6 +10,7 @@ TagManager:
   - Projectile
   - GuessCrate
   - ClearCrate
+  - CollisionTile
   layers:
   - Default
   - TransparentFX

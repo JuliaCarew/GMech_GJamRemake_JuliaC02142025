@@ -19,7 +19,7 @@ public class PlayerInventory : MonoBehaviour
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        //item = GetComponent<Item>(); // recognize object that player is colliding with
+        nearbyItem = GetComponent<Item>(); // recognize object that player is colliding with
     }
     /// <summary>
     /// Add an item to the player's inventory

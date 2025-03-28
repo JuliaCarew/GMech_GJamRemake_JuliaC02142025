@@ -8,6 +8,8 @@ public class GuessCrate : MonoBehaviour
     // manage and recognize unique riddles/words per level
     public UIManager uiManager;
     private PlayerInventory playerInventory;
+    public LevelManager levelManager;
+
     public string secretWord { get; private set; }
     private string guessWord;
     public int guessCount;
@@ -17,7 +19,11 @@ public class GuessCrate : MonoBehaviour
     // ref. alphabet prefabs to initialize letter set (make an array of chars?/string?)
     private void Start(){
         playerInventory = FindObjectOfType<PlayerInventory>();
-        secretWord = "CHAIR";
+
+        if (levelManager == null)
+        {
+            levelManager = FindObjectOfType<LevelManager>();
+        }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -33,6 +39,10 @@ public class GuessCrate : MonoBehaviour
             uiManager.HideControlHUD();
         }
     }
+    public void SetSecretWord(string word)
+    {
+        secretWord = word.ToUpper();
+    }
 
     public void SubmitGuess(){
         string playerWord = string.Join("", playerInventory.inventory);
@@ -43,14 +53,26 @@ public class GuessCrate : MonoBehaviour
         if (guessWord == secretWord)
         {
             Debug.Log("You got it!");
-            uiManager.ShowCorrectGuessUI("CHAIR");
+            uiManager.ShowCorrectGuessUI(secretWord);
             // only show for a few seconds
             // go to next level
+            StartCoroutine(LoadNextLevelAfterDelay());
         }
         else {
             Debug.Log("Wrong answer. Try again.");
             uiManager.ShowWrongGuessUI();
             guessCount++;
         }
+    }
+    
+    private IEnumerator LoadNextLevelAfterDelay()
+    {
+        yield return new WaitForSeconds(2f); // Wait 2 seconds to show the correct guess UI
+        
+        // Clear inventory for next level
+        playerInventory.RemoveUsedItems();
+        
+        // Load next level
+        levelManager.LoadNextLevel();
     }
 }

@@ -29,9 +29,17 @@ public class ClearCrate : MonoBehaviour
 
     public void Clear()
     {
-        // clear inventory and update UI
-        playerInventory.RemoveUsedItems();
-        // respawn item set
-        levelManager.Start(); // null ref. not set to instance of obj
+        // Destroy existing letter set before respawning
+        var currentLevel = levelManager.levels[levelManager.currentLevelIndex];
+        if (currentLevel.letterSet != null)
+        {
+            Destroy(currentLevel.letterSet);
+        }
+
+        // Respawn the letter set
+        currentLevel.letterSet = Instantiate(currentLevel.letterSet);
+        
+        // Reload the current level
+        levelManager.LoadCurrentLevel(); 
     }
 }
