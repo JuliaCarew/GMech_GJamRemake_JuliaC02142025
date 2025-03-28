@@ -2,39 +2,77 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public PlayerInventory playerInventory;
-    public GameObject playerObject;
+    [SerializeField] private GameObject playerObject;
+    private static PlayerInventory cachedPlayerInventory;
 
-    private void Awake()
+    private void Start()
     {
-        if (playerObject != null)
+        AssignPlayerInventory();
+    }
+
+    private void AssignPlayerInventory()
+    {
+        // If we haven't cached the PlayerInventory yet, find it
+        if (cachedPlayerInventory == null)
         {
-            if (playerObject != null && playerInventory == null)
+            // Find player object if not already assigned
+            if (playerObject == null)
             {
-                playerInventory = playerObject.GetComponent<PlayerInventory>();
+                playerObject = GameObject.FindGameObjectWithTag("Player");
+            }
+
+            // Try to get PlayerInventory component
+            if (playerObject != null)
+            {
+                cachedPlayerInventory = playerObject.GetComponent<PlayerInventory>();
             }
         }
+
+        // Log error if still can't find PlayerInventory
+        if (cachedPlayerInventory == null)
+        {
+            Debug.LogError($"Item {gameObject.name}: Cannot find PlayerInventory. Ensure Player object has PlayerInventory component!");
+        }
     }
 
-    public void PickUp() {
-        if (playerInventory == null)
+    public void PickUp()
+    {
+        // Reassign if lost reference
+        if (cachedPlayerInventory == null)
         {
-            Debug.LogError("Cannot pick up item. PlayerInventory is still null.");
-            return;
+            AssignPlayerInventory();
         }
-        Debug.Log("Player picked up item!");
-        AudioManager.Instance.PlayPickupSound();
-        playerInventory.AddItem(gameObject);
-        Destroy(gameObject);
+
+        if (cachedPlayerInventory != null)
+        {
+            Debug.Log($"Item {gameObject.name}: Picked up!");
+            AudioManager.Instance.PlayPickupSound();
+            cachedPlayerInventory.AddItem(gameObject);
+            Destroy(gameObject);
+        }
+        else
+        {
+            Debug.LogError($"Item {gameObject.name}: Cannot pick up. No PlayerInventory found!");
+        }
     }
-    public void Drop() {
-        if (playerInventory == null)
+
+    public void Drop()
+    {
+        // Reassign if lost reference
+        if (cachedPlayerInventory == null)
         {
-            Debug.LogError("Cannot drop item. PlayerInventory is still null.");
-            return;
+            AssignPlayerInventory();
         }
-        Debug.Log("Player dropped item!");
-        AudioManager.Instance.PlayDropSound();
-        playerInventory.RemoveItem(gameObject.name);
+
+        if (cachedPlayerInventory != null)
+        {
+            Debug.Log($"Item {gameObject.name}: Dropped!");
+            AudioManager.Instance.PlayDropSound();
+            cachedPlayerInventory.RemoveItem(gameObject.name);
+        }
+        else
+        {
+            Debug.LogError($"Item {gameObject.name}: Cannot drop. No PlayerInventory found!");
+        }
     }
 }

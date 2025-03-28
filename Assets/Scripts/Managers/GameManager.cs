@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     public CameraController cameraController;
     public Crosshair crosshair;
     public Item item;
-    public ItemSpawner itemSpawner;
     public LevelManager levelManager; 
     public PlayerController playerController;
     public PlayerInventory playerInventory;

@@ -8,12 +8,17 @@ public class LevelManager : MonoBehaviour
     public UIManager uiManager;
     public GuessCrate guessCrate;
     public PlayerInventory playerInventory;
+    public Item item; // Reference to the Item script to respawn letter set
 
     [System.Serializable]
     public class LevelSetup
     {
         public GameObject map;
         public GameObject letterSet;
+        public GameObject letterSetPrefab; 
+        public GameObject guessCratePrefab; 
+        public GameObject clearCratePrefab; 
+
         public string secretWord;
         [TextArea]
         public string riddle;
@@ -34,37 +39,74 @@ public class LevelManager : MonoBehaviour
         LoadCurrentLevel();
     }
 
+    
     public void LoadCurrentLevel()
+{
+    if (currentLevelIndex < levels.Count)
     {
-        if (currentLevelIndex < levels.Count)
-        {
-            LevelSetup currentLevel = levels[currentLevelIndex];
+        LevelSetup currentLevel = levels[currentLevelIndex];
 
-            // Deactivate all maps and letter sets first
-            foreach (LevelSetup level in levels)
-            {
+        // Deactivate all maps and letter sets first
+        foreach (LevelSetup level in levels)
+        {
+            if (level.map != null)
                 level.map.SetActive(false);
+            if (level.letterSet != null)
                 level.letterSet.SetActive(false);
-            }
-
-            // Activate current level's map and letter set
-            currentLevel.map.SetActive(true);
-            currentLevel.letterSet.SetActive(true);
-
-            // Update UI
-            uiManager.UpdateRiddle(currentLevel.riddle);
-            
-            // Set secret word for GuessCrate
-            guessCrate.SetSecretWord(currentLevel.secretWord);
-
-            Debug.Log($"Loaded Level {currentLevelIndex + 1}: {currentLevel.secretWord}");
+            if (level.guessCratePrefab != null)
+                level.guessCratePrefab.SetActive(false);
+            if (level.clearCratePrefab != null)
+                level.clearCratePrefab.SetActive(false);
         }
-        else
+
+        // Respawn letter set if it was destroyed
+        if (currentLevel.letterSet == null)
         {
-            Debug.Log("All levels completed!");
-            // game completion logic here
+            // Check if a prefab is assigned
+            if (currentLevel.letterSetPrefab != null)
+            {
+                // Instantiate the prefab at its original position
+                currentLevel.letterSet = Instantiate(
+                currentLevel.letterSetPrefab, 
+                currentLevel.letterSetPrefab.transform.position, 
+                currentLevel.letterSetPrefab.transform.rotation
+                );
+    
+                // Reassign inventory for all items in the letter set
+                Item[] items = currentLevel.letterSet.GetComponentsInChildren<Item>();
+
+                Debug.Log($"Respawned letter set for Level {currentLevelIndex + 1}");
+            }
+            else
+            {
+                Debug.LogError($"No letter set prefab assigned for Level {currentLevelIndex + 1}");
+            }
         }
+
+        // Activate current level's map and letter set
+        if (currentLevel.map != null)
+            currentLevel.map.SetActive(true);
+        if (currentLevel.letterSet != null)
+            currentLevel.letterSet.SetActive(true);
+        if (currentLevel.guessCratePrefab != null)
+            currentLevel.guessCratePrefab.SetActive(true);
+        if (currentLevel.clearCratePrefab != null)
+            currentLevel.clearCratePrefab.SetActive(true);
+
+        // Update UI
+        uiManager.UpdateRiddle(currentLevel.riddle);
+        
+        // Set secret word for GuessCrate
+        guessCrate.SetSecretWord(currentLevel.secretWord);
+
+        Debug.Log($"Loaded Level {currentLevelIndex + 1}: {currentLevel.secretWord}");
     }
+    else
+    {
+        Debug.Log("All levels completed!");
+        // game completion logic here
+    }
+}
 
     public void LoadNextLevel()
     {
@@ -72,6 +114,7 @@ public class LevelManager : MonoBehaviour
         
         if (currentLevelIndex < levels.Count)
         {
+            Debug.Log("LevelManager: loading next level...");
             LoadCurrentLevel();
         }
         else

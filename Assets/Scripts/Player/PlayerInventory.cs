@@ -135,6 +135,13 @@ public class PlayerInventory : MonoBehaviour
         inventory.Remove(itemName);
         uiManager.UpdateInventoryUI(inventory); // Update UI
     }
+
+    public void ClearInventory()
+    {
+        // Clear all items from the inventory
+        inventory.Clear();
+        Debug.Log("Inventory cleared");
+    }
 }
 // next wednesday animedia fest March 26th 8:30-9:30 lunch davis hall 12:00-1:00
 

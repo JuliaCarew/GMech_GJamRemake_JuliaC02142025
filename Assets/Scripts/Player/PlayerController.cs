@@ -6,7 +6,7 @@ public class TilemapWalkableData
 {
     public Tilemap tilemap;
     public TileBase[] walkableTiles;
-    public TileBase[] collisionTiles;
+    public TileBase[] obstacleTiles;
 }
 
 public class PlayerController : MonoBehaviour
@@ -14,28 +14,13 @@ public class PlayerController : MonoBehaviour
     public GameObject player;
     public Vector2 Position {get; private set;}
     public Vector2 LookAtDirection {get; private set;}
-    public Rigidbody2D rb;
 
     [SerializeField]private float speed = 5; 
-    [SerializeField] private float movementThreshold = 0.1f; // Threshold to prevent jittering
     [SerializeField] private TilemapWalkableData[] tilemapData;
-    private Vector2 lastValidPosition; // Store the last valid position
 
-    void Start()
-    {
-        // Initialize last valid position to starting position
-        lastValidPosition = transform.position;
-        Position = lastValidPosition;
-    }
-
-    void FixedUpdate()
+    void Update()
     {
         ReadInput();
-        if (!IsPositionWalkable(Position))
-        {
-            // Revert to last known valid position if current position is invalid
-            Position = lastValidPosition;
-        }
         transform.position = Position;
     }
 
@@ -56,10 +41,9 @@ public class PlayerController : MonoBehaviour
         Vector2 targetPosition = Position + moveDirection.normalized * speed * Time.deltaTime;
 
         // Check if the target position is floor 
-        if (IsPositionWalkable(targetPosition) && !IsPositionCollision(targetPosition))
+        if (IsPositionWalkable(targetPosition))
         {
             Position = targetPosition;  
-            lastValidPosition = Position; // Update last valid position
         }
     }
 
@@ -90,11 +74,11 @@ public class PlayerController : MonoBehaviour
         return false;
     }
     /// <summary>
-    /// Check if the target position is a collision tile on any of the tilemaps
+    /// Check if the target position is an obstacle tile on any of the tilemaps (have this call unique puzzle word)
     /// </summary>
     /// <param name="targetPosition"></param>
     /// <returns></returns>
-    private bool IsPositionCollision(Vector2 targetPosition)
+    private bool IsPositionObstacle(Vector2 targetPosition)
     {
         // Iterate through all tilemaps
         foreach (var mapData in tilemapData)
@@ -108,7 +92,7 @@ public class PlayerController : MonoBehaviour
 
             // Check if the tile is in the collision tiles array for this tilemap
             if (tileAtTarget != null && 
-                System.Array.Exists(mapData.collisionTiles, tile => tile == tileAtTarget))
+                System.Array.Exists(mapData.obstacleTiles, tile => tile == tileAtTarget))
             {
                 return true;
             }

@@ -11,6 +11,9 @@ TagManager:
   - GuessCrate
   - ClearCrate
   - CollisionTile
+  - LetterSet_Level1
+  - LetterSet_Level2
+  - LetterSet_Level3
   layers:
   - Default
   - TransparentFX

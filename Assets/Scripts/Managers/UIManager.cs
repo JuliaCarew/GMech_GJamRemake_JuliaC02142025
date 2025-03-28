@@ -42,6 +42,7 @@ public class UIManager : MonoBehaviour // singleton
 
     public void UpdateInventoryUI(List<string> inventory)
     {
+        Debug.Log("UIManager: Updating invenotry UI.");
         for (int i = 0; i < itemSlots.Count; i++)
         {
             if (i < inventory.Count)
@@ -55,6 +56,16 @@ public class UIManager : MonoBehaviour // singleton
                 itemSlots[i].enabled = false;
             }
         }
+    }
+    public void ClearInventoryUI()
+    {
+        // Reset all inventory slots to empty sprite and disable
+        foreach (Image slot in itemSlots)
+        {
+            slot.sprite = emptySprite;
+            slot.enabled = false;
+        }
+        Debug.Log("Inventory UI cleared");
     }
 
     private Sprite GetItemSprite(string itemName)
@@ -95,6 +106,7 @@ public class UIManager : MonoBehaviour // singleton
     {
         if (riddleTextUI != null && riddleTextComponent != null)
         {
+            Debug.Log("UIManager: Updating riddle text.");
             riddleTextComponent.text = riddleText;
             riddleTextUI.SetActive(true);
         }
@@ -103,6 +115,7 @@ public class UIManager : MonoBehaviour // singleton
     {
         if (hintUI != null && hintTextComponent != null)
         {
+            Debug.Log("UIManager: Updating hint text.");
             hintTextComponent.text = hintText;
             hintUI.SetActive(true);
         }
@@ -163,7 +176,7 @@ public class UIManager : MonoBehaviour // singleton
         }
         else
         {
-            Debug.LogWarning("CorrectGuessUI or CorrectGuessText is not assigned.");
+            Debug.LogWarning("UIManager: CorrectGuessUI or CorrectGuessText is not assigned.");
         }
     }
     public void ShowWrongGuessUI()

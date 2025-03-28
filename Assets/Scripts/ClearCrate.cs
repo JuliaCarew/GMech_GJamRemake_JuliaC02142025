@@ -10,7 +10,10 @@ public class ClearCrate : MonoBehaviour
 
     private void Start()
     {
-        playerInventory = FindObjectOfType<PlayerInventory>();
+        if (playerInventory == null)
+        {
+            playerInventory = FindObjectOfType<PlayerInventory>();
+        }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -29,17 +32,28 @@ public class ClearCrate : MonoBehaviour
 
     public void Clear()
     {
-        // Destroy existing letter set before respawning
+        // Get the current level
         var currentLevel = levelManager.levels[levelManager.currentLevelIndex];
+
+        // Completely clear the player's inventory
+        if (playerInventory != null)
+        {
+            playerInventory.ClearInventory(); 
+        }
+
+        // Clear the UI inventory
+        if (uiManager != null)
+        {
+            uiManager.ClearInventoryUI(); 
+        }
+
+        // Destroy existing letter set
         if (currentLevel.letterSet != null)
         {
             Destroy(currentLevel.letterSet);
         }
 
-        // Respawn the letter set
-        currentLevel.letterSet = Instantiate(currentLevel.letterSet);
-        
-        // Reload the current level
-        levelManager.LoadCurrentLevel(); 
+        // Reload the current level, which will respawn the letter set
+        levelManager.LoadCurrentLevel();
     }
 }
