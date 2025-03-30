@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    public GameManager gameManager;
     public UIManager uiManager;
     public GuessCrate guessCrate;
     public PlayerInventory playerInventory;
+    //public PlayerController playerController;
     public Item item; // Reference to the Item script to respawn letter set
 
     [System.Serializable]
@@ -18,7 +20,6 @@ public class LevelManager : MonoBehaviour
         public GameObject letterSetPrefab; 
         public GameObject guessCratePrefab; 
         public GameObject clearCratePrefab; 
-
         public string secretWord;
         [TextArea]
         public string riddle;
@@ -116,12 +117,28 @@ public class LevelManager : MonoBehaviour
         {
             Debug.Log("LevelManager: loading next level...");
             LoadCurrentLevel();
+            if(currentLevelIndex == 1)
+            {
+                // Set the active tilemaps for the second level
+                gameManager.playerController.SetActiveTilemaps(new bool[] { false, true, false });
+            }
+            else if(currentLevelIndex == 2)
+            {
+                // Set the active tilemaps for the third level
+                gameManager.playerController.SetActiveTilemaps(new bool[] { false, false, true });
+            }
+            else if(currentLevelIndex == 3)
+            {
+                // Set the active tilemaps for the fourth level
+                gameManager.playerController.SetActiveTilemaps(new bool[] { false, true, false });
+            }
+            else
+            {
+                // All levels completed
+                SceneManager.LoadScene("WinScene"); 
+            }
         }
-        else
-        {
-            // All levels completed
-            SceneManager.LoadScene("WinScene"); 
-        }
+
     }
 }
 // handle scene transitions to load the next level when the player reaches the end of the current level
@@ -130,3 +147,5 @@ public class LevelManager : MonoBehaviour
 // Level set up
 // can either do so through inspector or reading text files through code
 // may be easier since working with letter [refabs to do inspector
+
+// get level index reference when setting iswalkable bool in playercontroller script

@@ -7,6 +7,7 @@ public class TilemapWalkableData
     public Tilemap tilemap;
     public TileBase[] walkableTiles;
     public TileBase[] obstacleTiles;
+    public bool isActive = false; // track if the tilemap is active so walkables dont persist
 }
 
 public class PlayerController : MonoBehaviour
@@ -47,17 +48,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Check if the target position is walkable on any of the tilemaps
-    /// </summary>
-    /// <param name="targetPosition"></param>
-    /// <returns></returns>
     private bool IsPositionWalkable(Vector2 targetPosition)
     {
-        // Iterate through all tilemaps
+        // Iterate through all tilemaps and check only the active ones
         foreach (var mapData in tilemapData)
         {
-            if (mapData.tilemap == null) continue; // Skip null tilemaps
+            if (mapData.tilemap == null || !mapData.isActive) continue; // Skip null or inactive tilemaps
 
             Vector3Int targetCell = mapData.tilemap.WorldToCell(targetPosition);
 
@@ -73,17 +69,18 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
+
     /// <summary>
-    /// Check if the target position is an obstacle tile on any of the tilemaps (have this call unique puzzle word)
+    /// Check if the target position is an obstacle tile on any of the active tilemaps
     /// </summary>
     /// <param name="targetPosition"></param>
     /// <returns></returns>
     private bool IsPositionObstacle(Vector2 targetPosition)
     {
-        // Iterate through all tilemaps
+        // Iterate through all tilemaps and check only the active ones
         foreach (var mapData in tilemapData)
         {
-            if (mapData.tilemap == null) continue; // Skip null tilemaps
+            if (mapData.tilemap == null || !mapData.isActive) continue; // Skip null or inactive tilemaps
 
             Vector3Int targetCell = mapData.tilemap.WorldToCell(targetPosition);
 
@@ -98,5 +95,17 @@ public class PlayerController : MonoBehaviour
             }
         }
         return false;
+    }
+
+    // This method is called when the level is loaded to activate the correct tilemaps
+    public void SetActiveTilemaps(bool[] activeStates)
+    {
+        for (int i = 0; i < tilemapData.Length; i++)
+        {
+            if (tilemapData[i].tilemap != null)
+            {
+                tilemapData[i].isActive = activeStates[i]; // Set active state for each tilemap
+            }
+        }
     }
 }

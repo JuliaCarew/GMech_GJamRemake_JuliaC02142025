@@ -10,7 +10,7 @@ public class GuessCrate : MonoBehaviour
     private PlayerInventory playerInventory;
     public LevelManager levelManager;
 
-    public string secretWord { get; private set; }
+    public string secretWord;
     private string guessWord;
     public int guessCount;
 
@@ -42,6 +42,7 @@ public class GuessCrate : MonoBehaviour
     public void SetSecretWord(string word)
     {
         secretWord = word.ToUpper();
+        Debug.Log("GuessCrate: Secret word set: " + secretWord);
     }
 
     public void SubmitGuess(){
