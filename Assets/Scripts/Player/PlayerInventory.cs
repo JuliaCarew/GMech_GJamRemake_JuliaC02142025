@@ -10,8 +10,11 @@ public class PlayerInventory : MonoBehaviour
     private Item nearbyItem;
     private GuessCrate guessCrate;
     private ClearCrate clearCrate;
+    public ObstaclePuzzle obstaclePuzzle; // make invis in inspector?
     private bool isNearGuessCrate = false;
     private bool isNearClearCrate = false;
+    private bool isNearObstaclePuzzle = false;
+
 
     [SerializeField] private int inventorySize = 5;
     public List<string> inventory = new List<string>();
@@ -62,6 +65,12 @@ public class PlayerInventory : MonoBehaviour
             isNearClearCrate = true;
             Debug.Log("Player entered CLEAR Crate zone.");
         }
+        if (other.CompareTag("ObstaclePuzzle"))
+        {
+            obstaclePuzzle = other.GetComponent<ObstaclePuzzle>();
+            isNearObstaclePuzzle = true;
+            Debug.Log("Player entered Obstacle Puzzle zone.");
+        }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -81,18 +90,29 @@ public class PlayerInventory : MonoBehaviour
             clearCrate = null;
             Debug.Log("Player left Clear Crate zone.");
         }
+        else if (other.CompareTag("ObstaclePuzzle"))
+        {
+            isNearObstaclePuzzle = false;
+            obstaclePuzzle = null;
+            Debug.Log("Player left Obstacle Puzzle zone.");
+        }
     }
     
     private void Update(){
+        if (Input.GetKeyDown(KeyCode.T)){
+            uiManager.HideControlUI();
+        }
+        if (Input.GetKeyDown(KeyCode.Q)){
+            uiManager.ShowDictionary();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)){
+            uiManager.HideDictionary();
+        }
         if (nearbyItem != null) // item input
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 nearbyItem.PickUp();
-            }
-            else if (Input.GetKeyDown(KeyCode.Q))
-            {
-                nearbyItem.Drop();
             }
         }
         if (isNearGuessCrate && Input.GetKeyDown(KeyCode.F)) // guess input
@@ -104,22 +124,13 @@ public class PlayerInventory : MonoBehaviour
             Debug.Log("Reading F key input. Clearing player inventory");
             clearCrate.Clear();           
         }
-    }
-    /// <summary>
-    /// Get the type of projectile based on the items in the inventory
-    /// </summary>
-    /// <returns></returns>
-    public string GetProjectileType()
-    {
-        if (inventory.Count == 0) return null;
-
-        // Sort items to ensure consistent combinations (e.g., "BottleWoodRock" is the same as "RockWoodBottle")
-        List<string> sortedInventory = new List<string>(inventory);
-        sortedInventory.Sort();
-
-        // Combine items into a single string
-        return string.Join("", sortedInventory);
-    }
+        if (isNearObstaclePuzzle && Input.GetKeyDown(KeyCode.F)) // obstacle input
+        {
+            Debug.Log("Reading F key input. Submitting Guess.");
+            // submit guess to obstacle puzzle
+            obstaclePuzzle.SubmitGuess();
+        }
+    }    
 
     public void RemoveUsedItems()
     {
@@ -140,6 +151,7 @@ public class PlayerInventory : MonoBehaviour
     {
         // Clear all items from the inventory
         inventory.Clear();
+        AudioManager.Instance.PlayClearInventorySound();
         Debug.Log("Inventory cleared");
     }
 }

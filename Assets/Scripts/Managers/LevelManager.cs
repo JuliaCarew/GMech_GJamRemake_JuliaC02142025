@@ -9,8 +9,14 @@ public class LevelManager : MonoBehaviour
     public UIManager uiManager;
     public GuessCrate guessCrate;
     public PlayerInventory playerInventory;
-    //public PlayerController playerController;
     public Item item; // Reference to the Item script to respawn letter set
+
+    [System.Serializable]
+    public class ObstaclePuzzleSetup
+    {
+        public ObstaclePuzzle obstacleObject;
+        public string puzzleWord;
+    }
 
     [System.Serializable]
     public class LevelSetup
@@ -25,6 +31,9 @@ public class LevelManager : MonoBehaviour
         public string riddle;
         [TextArea]
         public string hint;
+        public List<ObstaclePuzzleSetup> obstaclePuzzles = new List<ObstaclePuzzleSetup>();
+        [HideInInspector]
+        public List<GameObject> spawnedObstacles = new List<GameObject>();
     }
 
     public List<LevelSetup> levels = new List<LevelSetup>();
@@ -35,6 +44,18 @@ public class LevelManager : MonoBehaviour
         if (playerInventory == null)
         {
             playerInventory = FindObjectOfType<PlayerInventory>();
+        }
+
+        // Disable all obstacles at start
+        foreach (LevelSetup level in levels)
+        {
+            foreach (ObstaclePuzzleSetup obstacle in level.obstaclePuzzles)
+            {
+                if (obstacle.obstacleObject != null)
+                {
+                    obstacle.obstacleObject.gameObject.SetActive(false);
+                }
+            }
         }
 
         LoadCurrentLevel();
@@ -58,6 +79,15 @@ public class LevelManager : MonoBehaviour
                 level.guessCratePrefab.SetActive(false);
             if (level.clearCratePrefab != null)
                 level.clearCratePrefab.SetActive(false);
+
+            // Disable all obstacles from this level
+            foreach (ObstaclePuzzleSetup obstacle in level.obstaclePuzzles)
+            {
+                if (obstacle.obstacleObject != null)
+                {
+                    obstacle.obstacleObject.gameObject.SetActive(false);
+                }
+            }
         }
 
         // Respawn letter set if it was destroyed
@@ -81,6 +111,21 @@ public class LevelManager : MonoBehaviour
             else
             {
                 Debug.LogError($"No letter set prefab assigned for Level {currentLevelIndex + 1}");
+            }
+        }
+
+        // Activate current level's obstacles and set up their puzzle words
+        foreach (ObstaclePuzzleSetup obstacleSetup in currentLevel.obstaclePuzzles)
+        {
+            if (obstacleSetup.obstacleObject != null)
+            {
+                // Configure the obstacle puzzle
+                obstacleSetup.obstacleObject.uiManager = uiManager;
+                obstacleSetup.obstacleObject.levelManager = this;
+                obstacleSetup.obstacleObject.SetSecretWord(obstacleSetup.puzzleWord);
+                    
+                // Activate the obstacle
+                obstacleSetup.obstacleObject.gameObject.SetActive(true);
             }
         }
 
@@ -112,6 +157,7 @@ public class LevelManager : MonoBehaviour
     public void LoadNextLevel()
     {
         currentLevelIndex++;
+        AudioManager.Instance.PlayWinSound();
         
         if (currentLevelIndex < levels.Count)
         {

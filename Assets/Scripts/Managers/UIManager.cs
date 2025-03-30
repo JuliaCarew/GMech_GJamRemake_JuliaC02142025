@@ -27,8 +27,18 @@ public class UIManager : MonoBehaviour // singleton
     [SerializeField] private GameObject wrongGuessUI;
 
     [Header("HUD UI")]
-    [SerializeField] private GameObject controlHUD;
+    [SerializeField] private GameObject guessCrateUI;
     [SerializeField] private GameObject clearHUD;
+    [SerializeField] private GameObject obsPuzzleHUD;
+    [SerializeField] private GameObject tutorialControlHUD;
+
+    [Header("Dictionary UI")]
+    [SerializeField] private GameObject dictionaryUI;
+    [SerializeField] private TextMeshProUGUI dictionaryTextComponent;
+    [SerializeField] private GameObject dictionaryUpdated;
+    [SerializeField] private TextMeshProUGUI dictionaryUpdatedText;
+    private List<string> dictionary = new List<string>();
+
 
     private void Start()
     {
@@ -38,6 +48,7 @@ public class UIManager : MonoBehaviour // singleton
         HideHintUI();
         HideCorrectGuessUI();
         HideWrongGuessUI();
+        HideDictionary();
     }
 
     public void UpdateInventoryUI(List<string> inventory)
@@ -66,6 +77,41 @@ public class UIManager : MonoBehaviour // singleton
             slot.enabled = false;
         }
         Debug.Log("Inventory UI cleared");
+    }
+
+    public void UpdateDictionary(string unlockedWords){
+        // each time the player guesses a secret word or puzzleword right, add it to the dictionary
+        if (dictionaryUI != null && dictionaryTextComponent != null)
+        {
+            string words = string.Join(", ", unlockedWords);
+            dictionary.Add(unlockedWords); // add to the dictionary list
+            dictionaryTextComponent.text = string.Join(", ", dictionary); // update the text component with the new list
+            AudioManager.Instance.PlayAddToDictionarySound();
+            Debug.Log($"Dictionary updated: " + unlockedWords + " added to dictionary: " + string.Join(", ", dictionary));
+
+        }
+        else
+        {
+            Debug.LogWarning("UIManager: Dictionary UI or Text Component is not assigned.");
+        }
+    }
+    public void ShowDictionary()
+    {
+        if (dictionaryUI != null)
+        {
+            dictionaryUI.SetActive(true);
+            AudioManager.Instance.PlayOpenDictionarySound();
+            Debug.Log("Dictionary UI shown.");
+        }
+    }
+    public void HideDictionary()
+    {
+        if (dictionaryUI != null)
+        {
+            dictionaryUI.SetActive(false);
+            //dictionaryTextComponent.text = ""; // Clear the text when hiding the UI
+            Debug.Log("Dictionary UI hidden.");
+        }
     }
 
     private Sprite GetItemSprite(string itemName)
@@ -108,16 +154,19 @@ public class UIManager : MonoBehaviour // singleton
         {
             Debug.Log("UIManager: Updating riddle text.");
             riddleTextComponent.text = riddleText;
-            riddleTextUI.SetActive(true);
+            riddleTextUI.SetActive(true);           
         }
     }
-    public void ShowHint(string hintText)
+    public IEnumerator ShowHint(string hintText)
     {
         if (hintUI != null && hintTextComponent != null)
         {
             Debug.Log("UIManager: Updating hint text.");
             hintTextComponent.text = hintText;
             hintUI.SetActive(true);
+            AudioManager.Instance.PlayHintSound();
+            yield return new WaitForSeconds(5);
+            hintUI.SetActive(false);
         }
     }
     public void HideRiddleUI()
@@ -143,13 +192,13 @@ public class UIManager : MonoBehaviour // singleton
             gameOverUI.SetActive(true); // Activate the Game Over panel when the player dies
         }
     }
-    public void ShowControlHUD()
+    public void ShowGuessHUD()
     {
-        controlHUD.SetActive(true);
+        guessCrateUI.SetActive(true);
     }
-    public void HideControlHUD()
+    public void HideGuessHUD()
     {
-        controlHUD.SetActive(false);
+        guessCrateUI.SetActive(false);
     }
     public void ShowClearHUD()
     {
@@ -193,6 +242,14 @@ public class UIManager : MonoBehaviour // singleton
         Debug.Log("Wrong guess UI hidden.");
     }
 
+    public IEnumerator DictionaryUpdated()
+    {
+        dictionaryUpdated.SetActive(true);
+        dictionaryUpdatedText.text = "Dictionary Updated!";
+        yield return new WaitForSeconds(2);
+        dictionaryUpdated.SetActive(false);
+    }
+
     public void HideCorrectGuessUI()
     {
         if (correctGuessUI != null)
@@ -207,6 +264,20 @@ public class UIManager : MonoBehaviour // singleton
         {
             wrongGuessUI.SetActive(false);
         }
+    }
+
+    public void ShowObstacleHUD()
+    {
+        obsPuzzleHUD.SetActive(true);
+    }
+    public void HideObstacleHUD()
+    {
+        obsPuzzleHUD.SetActive(false);
+    }
+
+    public void HideControlUI()
+    {
+        tutorialControlHUD.SetActive(false);
     }
 
     public void RestartGame()

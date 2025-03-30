@@ -55,24 +55,4 @@ public class Item : MonoBehaviour
             Debug.LogError($"Item {gameObject.name}: Cannot pick up. No PlayerInventory found!");
         }
     }
-
-    public void Drop()
-    {
-        // Reassign if lost reference
-        if (cachedPlayerInventory == null)
-        {
-            AssignPlayerInventory();
-        }
-
-        if (cachedPlayerInventory != null)
-        {
-            Debug.Log($"Item {gameObject.name}: Dropped!");
-            AudioManager.Instance.PlayDropSound();
-            cachedPlayerInventory.RemoveItem(gameObject.name);
-        }
-        else
-        {
-            Debug.LogError($"Item {gameObject.name}: Cannot drop. No PlayerInventory found!");
-        }
-    }
 }

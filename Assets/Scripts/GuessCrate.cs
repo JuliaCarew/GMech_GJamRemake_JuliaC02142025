@@ -29,14 +29,14 @@ public class GuessCrate : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            uiManager.ShowControlHUD();
+            uiManager.ShowGuessHUD();
         }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            uiManager.HideControlHUD();
+            uiManager.HideGuessHUD();
         }
     }
     public void SetSecretWord(string word)
@@ -50,19 +50,31 @@ public class GuessCrate : MonoBehaviour
         guessWord = playerWord.ToUpper();
 
         Debug.Log("Submitting guess...");
-       
+
         if (guessWord == secretWord)
         {
             Debug.Log("You got it!");
             uiManager.ShowCorrectGuessUI(secretWord);
-            // only show for a few seconds
+            uiManager.UpdateDictionary(secretWord); // Update the dictionary UI with the correct word
+            uiManager.StartCoroutine(uiManager.DictionaryUpdated()); // Update the dictionary UI with the correct word
+            
+            AudioManager.Instance.PlayCorrectGuessSound();
             // go to next level
             StartCoroutine(LoadNextLevelAfterDelay());
         }
         else {
             Debug.Log("Wrong answer. Try again.");
             uiManager.ShowWrongGuessUI();
+            // Play the wrong guess sound
+            AudioManager.Instance.PlayWrongGuessSound();
             guessCount++;
+        }
+        if (guessCount == 3)
+        {
+            Debug.Log("you have guessed 3 times, giving hint...");
+            string hint = levelManager.levels[levelManager.currentLevelIndex].hint;
+            uiManager.StartCoroutine(uiManager.ShowHint(hint)); // Show the hint UI for 3 seconds
+            return;
         }
     }
     

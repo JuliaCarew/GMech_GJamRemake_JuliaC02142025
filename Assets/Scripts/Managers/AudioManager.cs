@@ -9,8 +9,14 @@ public class AudioManager : MonoBehaviour
     [Header("Audio Clips")]
     [SerializeField] private AudioClip backgroundMusic;  // Background music
     [SerializeField] private AudioClip pickupSound;      // Pickup item sound
-    [SerializeField] private AudioClip dropSound;        // Drop item sound
-    [SerializeField] private AudioClip shootSound;       // Shoot sound effect
+    [SerializeField] private AudioClip clearInventorySound; // when inv is cleared at clearcrate
+    [SerializeField] private AudioClip winSound;      // when clearing a level
+    [SerializeField] private AudioClip hintSound;     // when showing the int UI
+    [SerializeField] private AudioClip addToDictionarySound;    // when a word is added to the dictionary
+    [SerializeField] private AudioClip openDictionarySound;    // when dictionary is opened
+    [SerializeField] private AudioClip correctGuessSound;    // when a guess is right and submitted
+    [SerializeField] private AudioClip wrongGuessSound;    // when a guess is wrong and submitted
+    [SerializeField] private AudioClip puzzleSolvedSound;    // when a puzzle is solved correctly
 
     public static AudioManager Instance;
 
@@ -50,19 +56,63 @@ public class AudioManager : MonoBehaviour
             sfxSource.PlayOneShot(pickupSound); 
         }
     }
-    public void PlayDropSound()
+    public void PlayClearInventorySound()
     {
         if (sfxSource != null && pickupSound != null)
         {
-            sfxSource.PlayOneShot(dropSound); 
+            sfxSource.PlayOneShot(clearInventorySound); 
         }
     }
 
-    public void PlayShootSound()
+    public void PlayWinSound()
     {
-        if (sfxSource != null && shootSound != null)
+        if (sfxSource != null && winSound != null)
         {
-            sfxSource.PlayOneShot(shootSound); 
+            sfxSource.PlayOneShot(winSound); 
+        }
+    }
+
+    public void PlayHintSound()
+    {
+        if (sfxSource != null && hintSound != null)
+        {
+            sfxSource.PlayOneShot(hintSound); 
+        }
+    }
+    
+    public void PlayAddToDictionarySound()
+    {
+        if (sfxSource != null && addToDictionarySound != null)
+        {
+            sfxSource.PlayOneShot(addToDictionarySound); 
+        }
+    }
+    public void PlayOpenDictionarySound()
+    {
+        if (sfxSource != null && openDictionarySound != null)
+        {
+            sfxSource.PlayOneShot(openDictionarySound); 
+        }
+    }
+    public void PlayCorrectGuessSound()
+    {
+        if (sfxSource != null && correctGuessSound != null)
+        {
+            sfxSource.PlayOneShot(correctGuessSound); 
+        }
+    }
+    public void PlayWrongGuessSound()
+    {
+        if (sfxSource != null && wrongGuessSound != null)
+        {
+            sfxSource.PlayOneShot(wrongGuessSound); 
+        }
+    }
+    public void PlayPuzzleSolvedSound()
+    {
+        if (sfxSource != null && puzzleSolvedSound != null)
+        {
+            sfxSource.PlayOneShot(puzzleSolvedSound); 
         }
     }
 
