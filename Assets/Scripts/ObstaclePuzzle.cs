@@ -175,14 +175,15 @@ public class ObstaclePuzzle : MonoBehaviour
         guessWord = playerWord.ToUpper();
 
         Debug.Log("ObstaclePuzzle - Submitting guess: " + guessWord + " for puzzle: " + puzzleWord);
-       
+        uiManager.UpdateDictionaryGuesses(guessWord); // update the dictionary with the guessed word
+
         if (guessWord == puzzleWord)
         {
             Debug.Log("ObstaclePuzzle: Obstacle puzzle solved!");
             
             isPuzzleSolved = true;
-            uiManager.UpdateDictionary(puzzleWord); 
-            uiManager.StartCoroutine(uiManager.DictionaryUpdated());
+            uiManager.UpdateDictionary(puzzleWord); // update the dictionary with the puzzle word 
+            uiManager.StartCoroutine(uiManager.DictionaryUpdated());  // start DictionaryUpdated coroutine
 
             AudioManager.Instance.PlayPuzzleSolvedSound();
 

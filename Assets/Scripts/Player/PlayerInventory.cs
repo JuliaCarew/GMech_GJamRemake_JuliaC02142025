@@ -18,7 +18,10 @@ public class PlayerInventory : MonoBehaviour
 
     [SerializeField] private int inventorySize = 5;
     public List<string> inventory = new List<string>();
-    
+
+    private bool controlHUDisOn = true;
+    private bool dictionaryisOn = false;
+
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -99,14 +102,31 @@ public class PlayerInventory : MonoBehaviour
     }
     
     private void Update(){
-        if (Input.GetKeyDown(KeyCode.T)){
-            uiManager.HideControlUI();
+        if (Input.GetKeyDown(KeyCode.T)){ // toggle controls with T
+            if (controlHUDisOn)
+            {
+                uiManager.HideControlUI();
+                controlHUDisOn = false;
+            }
+            else if (!controlHUDisOn)
+            {
+                uiManager.ShowControlUI();
+                controlHUDisOn = true;
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Q)){
-            uiManager.ShowDictionary();
-        }
-        if (Input.GetKeyDown(KeyCode.Escape)){
-            uiManager.HideDictionary();
+
+        if (Input.GetKeyDown(KeyCode.Q)) // press Q to toggle dictionary
+        {
+            if (dictionaryisOn)
+            {
+                uiManager.HideDictionary();
+                dictionaryisOn = false;
+            }
+            else if (!dictionaryisOn)
+            {
+                uiManager.ShowDictionary();
+                dictionaryisOn = true;
+            }
         }
         if (nearbyItem != null) // item input
         {

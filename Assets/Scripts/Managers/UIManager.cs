@@ -30,14 +30,17 @@ public class UIManager : MonoBehaviour // singleton
     [SerializeField] private GameObject guessCrateUI;
     [SerializeField] private GameObject clearHUD;
     [SerializeField] private GameObject obsPuzzleHUD;
-    [SerializeField] private GameObject tutorialControlHUD;
+    [SerializeField] private GameObject tutorialControlHUD; // CONTROLS
 
     [Header("Dictionary UI")]
     [SerializeField] private GameObject dictionaryUI;
-    [SerializeField] private TextMeshProUGUI dictionaryTextComponent;
+    [SerializeField] private TextMeshProUGUI dictionaryTextComponent; // display player's correct secret words
     [SerializeField] private GameObject dictionaryUpdated;
     [SerializeField] private TextMeshProUGUI dictionaryUpdatedText;
+    [SerializeField] private TextMeshProUGUI dictionaryGuesses; // display player's guessed words
     private List<string> dictionary = new List<string>();
+    private List<string> dictionaryGuessedWords = new List<string>();
+
 
 
     private void Start()
@@ -84,10 +87,27 @@ public class UIManager : MonoBehaviour // singleton
         if (dictionaryUI != null && dictionaryTextComponent != null)
         {
             string words = string.Join(", ", unlockedWords);
-            dictionary.Add(unlockedWords); // add to the dictionary list
-            dictionaryTextComponent.text = string.Join(", ", dictionary); // update the text component with the new list
+            dictionaryGuessedWords.Add(unlockedWords); // add to the dictionary list
+            dictionaryTextComponent.text = string.Join(", ", dictionaryGuessedWords); // update the text component with the new list
             AudioManager.Instance.PlayAddToDictionarySound();
-            Debug.Log($"Dictionary updated: " + unlockedWords + " added to dictionary: " + string.Join(", ", dictionary));
+            Debug.Log($"Dictionary updated: " + unlockedWords + " added to dictionary: " + string.Join(", ", dictionaryGuessedWords));
+
+        }
+        else
+        {
+            Debug.LogWarning("UIManager: Dictionary UI or Text Component is not assigned.");
+        }
+    }
+    public void UpdateDictionaryGuesses(string guessedWords)
+    {
+        // each time the player guesses a secret word or puzzleword right, add it to the dictionary
+        if (dictionaryUI != null && dictionaryGuesses != null)
+        {
+            string words = string.Join(", ", guessedWords);
+            dictionary.Add(guessedWords); // add to the dictionary list
+            dictionaryGuesses.text = string.Join(", ", dictionary); // update the text component with the new list
+            AudioManager.Instance.PlayAddToDictionarySound();
+            Debug.Log($"Dictionary GUESS updated: " + guessedWords + " added to dictionary: " + string.Join(", ", dictionary));
 
         }
         else
@@ -272,9 +292,13 @@ public class UIManager : MonoBehaviour // singleton
     }
     public void HideObstacleHUD()
     {
-        obsPuzzleHUD.SetActive(false);
+        obsPuzzleHUD.SetActive(false); // getting error object already destroyed but still trying to access it
     }
 
+    public void ShowControlUI()
+    {
+        tutorialControlHUD.SetActive(true);
+    }
     public void HideControlUI()
     {
         tutorialControlHUD.SetActive(false);

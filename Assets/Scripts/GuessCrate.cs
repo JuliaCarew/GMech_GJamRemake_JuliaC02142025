@@ -50,6 +50,7 @@ public class GuessCrate : MonoBehaviour
         guessWord = playerWord.ToUpper();
 
         Debug.Log("Submitting guess...");
+        uiManager.UpdateDictionaryGuesses(guessWord); // Update the dictionary with the player's guessed word
 
         if (guessWord == secretWord)
         {
