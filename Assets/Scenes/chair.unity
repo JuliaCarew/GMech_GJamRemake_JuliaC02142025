@@ -294,15 +294,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3bcd3a8f8ae42d040b649f9a1ac9b530, type: 2}
-  m_sharedMaterial: {fileID: -6492048010681654063, guid: 3bcd3a8f8ae42d040b649f9a1ac9b530, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 920b578d7ad82b64e9047539e70a1dc1, type: 2}
+  m_sharedMaterial: {fileID: -3987268092227549317, guid: 920b578d7ad82b64e9047539e70a1dc1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279547940
-  m_fontColor: {r: 0.14049247, g: 0.72327036, b: 0.07960515, a: 1}
+    rgba: 4280958831
+  m_fontColor: {r: 0.43529415, g: 0.24705884, b: 0.16470589, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -319,8 +319,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 46
-  m_fontSizeBase: 46
+  m_fontSize: 56
+  m_fontSizeBase: 56
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -355,7 +355,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -155.80164, y: 0, z: -167.07912, w: -28.84017}
+  m_margin: {x: -68.85309, y: 0, z: -83.32135, w: -28.84017}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -9288,7 +9288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1050443426
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10258,14 +10258,14 @@ RectTransform:
   m_GameObject: {fileID: 1148572786}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.7743276}
-  m_LocalScale: {x: 5.117391, y: 2.13761, z: 4.066909}
+  m_LocalScale: {x: 5.113424, y: 4.4361553, z: 5.0014844}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 974617176}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 958, y: 600}
+  m_AnchoredPosition: {x: 947, y: 600}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1148572788
@@ -10281,15 +10281,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.46540874, g: 0.46540874, b: 0.46540874, a: 1}
+  m_Color: {r: 0.8301887, g: 0.81844074, b: 0.81844074, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 20b8f7b8557842946bc7320d2eeaf873, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -20467,7 +20467,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 951, y: 633}
+  m_AnchoredPosition: {x: 951, y: 646.6}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1815259027
@@ -20492,15 +20492,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: You got it!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3bcd3a8f8ae42d040b649f9a1ac9b530, type: 2}
-  m_sharedMaterial: {fileID: -6492048010681654063, guid: 3bcd3a8f8ae42d040b649f9a1ac9b530, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 920b578d7ad82b64e9047539e70a1dc1, type: 2}
+  m_sharedMaterial: {fileID: -3987268092227549317, guid: 920b578d7ad82b64e9047539e70a1dc1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4280893296
+  m_fontColor: {r: 0.43921572, g: 0.24705884, b: 0.16078432, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -20517,8 +20517,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
-  m_fontSizeBase: 16
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -22098,7 +22098,7 @@ MonoBehaviour:
     secretWord: SHIRT
     riddle: "\u201CI have a neck, but no head. I have two arms, but no hands. What
       am I?\u201D "
-    hint: you may misspell this and curse
+    hint: it's something you wear
     obstaclePuzzles:
     - obstacleObject: {fileID: 1191607944}
       puzzleWord: BOOKS
