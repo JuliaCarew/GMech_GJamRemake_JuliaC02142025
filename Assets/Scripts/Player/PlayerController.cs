@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 LookAtDirection {get; private set;}
 
     [SerializeField]private float speed = 5; 
-    [SerializeField] private TilemapWalkableData[] tilemapData;
+    [SerializeField] public TilemapWalkableData[] tilemapData;
 
     void Update()
     {

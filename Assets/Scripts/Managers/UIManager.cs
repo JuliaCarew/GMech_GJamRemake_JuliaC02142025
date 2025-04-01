@@ -18,8 +18,8 @@ public class UIManager : MonoBehaviour // singleton
     [Header("Riddles & Hints UI")]
     [SerializeField] private GameObject riddleTextUI;
     [SerializeField] private TextMeshProUGUI riddleTextComponent;
-    [SerializeField] private GameObject hintUI;
-    [SerializeField] private TextMeshProUGUI hintTextComponent;
+    [SerializeField] public GameObject hintUI;
+    [SerializeField] public TextMeshProUGUI hintTextComponent;
 
     [Header("Guess Feedback UI")]
     [SerializeField] private GameObject correctGuessUI;
@@ -177,7 +177,7 @@ public class UIManager : MonoBehaviour // singleton
             riddleTextUI.SetActive(true);           
         }
     }
-    public IEnumerator ShowHint(string hintText)
+    public void ShowHint(string hintText)
     {
         if (hintUI != null && hintTextComponent != null)
         {
@@ -185,7 +185,12 @@ public class UIManager : MonoBehaviour // singleton
             hintTextComponent.text = hintText;
             hintUI.SetActive(true);
             AudioManager.Instance.PlayHintSound();
-            yield return new WaitForSeconds(5);
+        }
+    }
+    public void HideHint()
+    {
+        if (hintUI != null)
+        {
             hintUI.SetActive(false);
         }
     }

@@ -159,14 +159,6 @@ public class PlayerInventory : MonoBehaviour
         uiManager.UpdateInventoryUI(inventory);
     }   
 
-    // make method to get rid of any item from inventory by clicking and dragging it out of the inventory UI (use the UIManager script)
-    public void RemoveItem(string itemName) // fix ??
-    {
-        // need to read left mouse button click and drag to recognize what item is selected and update position
-        inventory.Remove(itemName);
-        uiManager.UpdateInventoryUI(inventory); // Update UI
-    }
-
     public void ClearInventory()
     {
         // Clear all items from the inventory
@@ -175,6 +167,3 @@ public class PlayerInventory : MonoBehaviour
         Debug.Log("Inventory cleared");
     }
 }
-// next wednesday animedia fest March 26th 8:30-9:30 lunch davis hall 12:00-1:00
-
-// !! make sure you can't pick up any more letters atfer you have a full inventory

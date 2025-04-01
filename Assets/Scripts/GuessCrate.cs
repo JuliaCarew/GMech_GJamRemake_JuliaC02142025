@@ -74,7 +74,9 @@ public class GuessCrate : MonoBehaviour
         {
             Debug.Log("you have guessed 3 times, giving hint...");
             string hint = levelManager.levels[levelManager.currentLevelIndex].hint;
-            uiManager.StartCoroutine(uiManager.ShowHint(hint)); // Show the hint UI for 3 seconds
+            Debug.Log($"Hint text for level {levelManager.currentLevelIndex}: '{hint}'");
+            Debug.Log($"hintUI is null: {uiManager.hintUI == null}, hintTextComponent is null: {uiManager.hintTextComponent == null}");
+            uiManager.ShowHint(hint); // Show the hint UI  
             return;
         }
     }
