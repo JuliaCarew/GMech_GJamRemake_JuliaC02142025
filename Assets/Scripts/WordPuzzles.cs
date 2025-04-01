@@ -1,13 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEditor.Rendering.CameraUI;
-using UnityEngine.UIElements;
-using System.Diagnostics;
-using System.Reflection;
 
 public class WordPuzzles : MonoBehaviour
 {

@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     public GuessCrate guessCrate;
     public PlayerInventory playerInventory;
     public Item item; // Reference to the Item script to respawn letter set
+    public GameObject mainMenu;
 
     [System.Serializable]
     public class ObstaclePuzzleSetup
@@ -43,6 +44,8 @@ public class LevelManager : MonoBehaviour
     
     public void Start()
     {
+        mainMenu.SetActive(true); // enable main menu UI
+        
         if (playerInventory == null)
         {
             playerInventory = FindObjectOfType<PlayerInventory>();
@@ -68,6 +71,7 @@ public class LevelManager : MonoBehaviour
 {
     if (currentLevelIndex < levels.Count)
     {
+        mainMenu.SetActive(false); // disable main menu UI
         LevelSetup currentLevel = levels[currentLevelIndex];
 
         // Deactivate all maps and letter sets first
