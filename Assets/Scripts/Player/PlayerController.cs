@@ -70,33 +70,6 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    /// <summary>
-    /// Check if the target position is an obstacle tile on any of the active tilemaps
-    /// </summary>
-    /// <param name="targetPosition"></param>
-    /// <returns></returns>
-    private bool IsPositionObstacle(Vector2 targetPosition)
-    {
-        // Iterate through all tilemaps and check only the active ones
-        foreach (var mapData in tilemapData)
-        {
-            if (mapData.tilemap == null || !mapData.isActive) continue; // Skip null or inactive tilemaps
-
-            Vector3Int targetCell = mapData.tilemap.WorldToCell(targetPosition);
-
-            // Get the tile at the target position
-            TileBase tileAtTarget = mapData.tilemap.GetTile(targetCell);
-
-            // Check if the tile is in the collision tiles array for this tilemap
-            if (tileAtTarget != null && 
-                System.Array.Exists(mapData.obstacleTiles, tile => tile == tileAtTarget))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     // This method is called when the level is loaded to activate the correct tilemaps
     public void SetActiveTilemaps(bool[] activeStates)
     {
