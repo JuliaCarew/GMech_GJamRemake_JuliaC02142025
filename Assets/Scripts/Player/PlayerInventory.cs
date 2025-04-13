@@ -35,7 +35,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (inventory.Count >= inventorySize) return;
 
-        string itemName = item.name.Replace("(Clone)", "").Trim();
+        string itemName = item.name;
         inventory.Add(itemName);
         Debug.Log("Item added to inventory: " + itemName);
         Destroy(item);
